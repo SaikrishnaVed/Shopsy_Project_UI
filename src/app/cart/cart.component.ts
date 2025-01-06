@@ -9,6 +9,7 @@ import { AppService } from '../app.service';
 export class CartComponent implements OnInit {
   cartItems: any;
   totalAmount: number = 0;
+  discountedAmount: number = 0;
   isLoading = false;
   // appliedCoupons: Coupon[] = [];
   isCheckOut = false;
@@ -129,6 +130,8 @@ export class CartComponent implements OnInit {
       userId: userId,
       price: item.list_price,
       DateCreated: new Date(),
+      TotalToPay: this.totalAmount,
+      DiscountedAmount: this.discountedAmount
     }));
 
     this.appService.AddBulkPurchaseOrders(purchaseOrders).subscribe({
@@ -214,10 +217,11 @@ export class CartComponent implements OnInit {
 
     if (this.appliedCoupon) {
       if (this.appliedCoupon.discount_type === 'percentage') {
-        this.totalAmount -= (this.totalAmount * this.appliedCoupon.discount_value) / 100;
+        this.discountedAmount = (this.totalAmount * this.appliedCoupon.discount_value) / 100;
       } else if (this.appliedCoupon.discount_type === 'fixed') {
-        this.totalAmount -= this.appliedCoupon.discount_value;
+        this.discountedAmount = this.appliedCoupon.discount_value;
       }
+      this.totalAmount -= this.discountedAmount;
 
       // Ensure the total amount doesn't go below zero
       this.totalAmount = Math.max(this.totalAmount, 0);

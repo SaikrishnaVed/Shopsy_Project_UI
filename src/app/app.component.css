@@ -24,7 +24,7 @@ body {
 .navbar .menu {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 35px;
 }
 .navbar .menu-allprod {
   display: flex;

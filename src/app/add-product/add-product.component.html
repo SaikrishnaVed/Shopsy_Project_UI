@@ -152,9 +152,7 @@
         <div class="form-actions">
           <button mat-raised-button color="primary" type="submit" >Submit</button>
           <button mat-button type="button" (click)="onReset(productForm)">Reset</button>
-          <button mat-raised-button color="secondary" type="button" class="backBtn" routerLink="/products">Back</button>
+          <button mat-raised-button color="secondary" type="button" class="backBtn" *ngIf="isAdmin" routerLink= "/productslist">Back</button>
         </div>
-  
       </form>
     </div>
-    

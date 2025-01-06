@@ -28,11 +28,13 @@ export class AddProductComponent implements OnInit {
   isAddingNewCategory = false;
   newCategoryName = '';
   isEditMode: boolean = false;
+  isAdmin = false;
 
   constructor(private appService: AppService, private router: Router) {}
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.isAdmin = localStorage.getItem('role') === 'admin' ? true : false;
     this.isEditMode = Boolean(localStorage.getItem('isEditMode'));
     if(this.isEditMode){
       const productData = localStorage.getItem('editProduct');
