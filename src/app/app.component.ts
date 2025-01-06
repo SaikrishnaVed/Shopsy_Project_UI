@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // this.isAdminPage = localStorage.getItem('role') == 'admin';
+    // this.isAdminPage = localStorage.getItem('role') == 'admin' ? true : false;
     this.username = localStorage.getItem('username');
   }
 

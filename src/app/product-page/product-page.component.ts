@@ -148,15 +148,15 @@ export class ProductPageComponent implements OnInit {
     } 
 
     toggleWishlist(product: any): void {
-      product.Isfavourite = !product.Isfavourite;
-      const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.Isfavourite };
+      product.isfavourite = !product.isfavourite;
+      const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.isfavourite };
   
-      // if (product.Isfavourite) {
+      // if (product.isfavourite) {
         this.appService.AddToWishList(wishItem).subscribe({
           next: () => {
             this.productList.forEach((p) => {
               if (p.product_Id === product.product_Id) {
-                p.isfavourite = product.Isfavourite;
+                p.isfavourite = product.isfavourite == 'true' ? true : false;
               }
             });
   
@@ -166,7 +166,7 @@ export class ProductPageComponent implements OnInit {
               alert(`${product.product_Name} removed from wishlist.`);
           },
           error: () => {
-            product.Isfavourite = !product.Isfavourite;
+            product.isfavourite = !product.isfavourite;
             alert('Failed to add to wishlist.');
           },
         });

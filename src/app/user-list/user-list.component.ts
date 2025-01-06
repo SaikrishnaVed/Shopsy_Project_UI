@@ -77,28 +77,30 @@ export class UserListComponent implements OnInit, AfterViewInit {
       };
 
       this.isLoading = true;
-      this.appService.UpdateUserRole(updatedUser).subscribe({
-        next: () => {
-          this.isLoading = false;
-          if (updatedUser.userId === Number(localStorage.getItem('userId'))) {
-            this.currentRole = updatedUser.role;
-            localStorage.setItem('role', this.currentRole);
-          }
+      if (confirm('Are you sure you want to update user status?')) {
+        this.appService.UpdateUserRole(updatedUser).subscribe({
+          next: () => {
+            this.isLoading = false;
+            if (updatedUser.userId === Number(localStorage.getItem('userId'))) {
+              this.currentRole = updatedUser.role;
+              localStorage.setItem('role', this.currentRole);
+            }
 
-          alert('User updated successfully!');
-          const index = this.usersList.findIndex((u) => u.id === this.editingRow.id);
-          if (index !== -1) {
-            this.usersList[index] = { ...this.editingRow };
-            this.dataSource.data = [...this.usersList];
-          }
-          this.editingRow = null;
-        },
-        error: (err) => {
-          this.isLoading = false;
-          console.error('Error updating user', err);
-          alert('Failed to update user. Please try again.');
-        },
-      });
+            alert('User updated successfully!');
+            const index = this.usersList.findIndex((u) => u.id === this.editingRow.id);
+            if (index !== -1) {
+              this.usersList[index] = { ...this.editingRow };
+              this.dataSource.data = [...this.usersList];
+            }
+            this.editingRow = null;
+          },
+          error: (err) => {
+            this.isLoading = false;
+            console.error('Error updating user', err);
+            alert('Failed to update user. Please try again.');
+          },
+        });
+      }
     }
   }
 

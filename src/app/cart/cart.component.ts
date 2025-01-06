@@ -103,6 +103,7 @@ export class CartComponent implements OnInit {
 
   // Remove an item from the cart
   removeItem(item: CartItem): void {
+    if (confirm('Are you sure you want to delete items?')) {
     this.appService.DeleteCartItem(item.cart_Id).subscribe({
       next: () => {
         this.cartItems = this.cartItems.filter((cartItem) => cartItem.cart_Id !== item.cart_Id);
@@ -112,6 +113,7 @@ export class CartComponent implements OnInit {
         console.error('Error removing cart item:', err);
       },
     });
+  }
   }
 
   // Proceed to checkout
@@ -133,7 +135,7 @@ export class CartComponent implements OnInit {
       TotalToPay: this.totalAmount,
       DiscountedAmount: this.discountedAmount
     }));
-
+    if (confirm('Are you sure you want to checkout?')) {
     this.appService.AddBulkPurchaseOrders(purchaseOrders).subscribe({
       next: () => {
         alert('Checkout completed successfully!');
@@ -163,6 +165,7 @@ export class CartComponent implements OnInit {
         alert('Failed to complete checkout. Please try again.');
       },
     });
+  }
   }
 
 

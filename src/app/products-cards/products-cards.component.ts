@@ -192,15 +192,15 @@ export class ProductsCardsComponent implements OnInit {
   }
 
   toggleWishlist(product: any): void {
-    product.Isfavourite = !product.Isfavourite;
-    const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.Isfavourite };
+    product.isfavourite = !product.isfavourite;
+    const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.isfavourite };
 
-    // if (product.Isfavourite) {
+    // if (product.isfavourite) {
       this.appService.AddToWishList(wishItem).subscribe({
         next: () => {
           this.productList.forEach((p) => {
             if (p.product_Id === wishItem.productid) {
-              p.Isfavourite = wishItem.Isfavourite;
+              p.isfavourite = wishItem.Isfavourite;
             }
           });
 
@@ -210,7 +210,7 @@ export class ProductsCardsComponent implements OnInit {
             alert(`${product.product_Name} removed from wishlist.`);
         },
         error: () => {
-          product.Isfavourite = !product.Isfavourite;
+          product.isfavourite = !product.isfavourite;
           alert('Failed to add to wishlist.');
         },
       });
@@ -252,5 +252,5 @@ export class Product {
   imagePath: string;
   cartCount: number;
   cartcount: number;
-  Isfavourite: boolean;
+  isfavourite: boolean;
 }
