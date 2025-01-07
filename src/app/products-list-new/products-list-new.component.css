@@ -24,9 +24,31 @@ mat-paginator{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full height to center the spinner */
+  height: 100vh;
 }
 
 th.mat-sort-header-sorted {
   color: black;
+}
+
+#productTable {
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+th {
+  background-color: #686262;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.mat-select{
+  background-color: rgb(223, 153, 153) !important;
 }

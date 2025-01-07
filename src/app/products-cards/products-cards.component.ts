@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { CartItem } from '../cart/cart.component';
@@ -9,7 +9,8 @@ import { ChatService } from '../services/chat.service';
 @Component({
   selector: 'app-products-cards',
   templateUrl: './products-cards.component.html',
-  styleUrls: ['./products-cards.component.css']
+  styleUrls: ['./products-cards.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsCardsComponent implements OnInit {
   userMessage: string = '';

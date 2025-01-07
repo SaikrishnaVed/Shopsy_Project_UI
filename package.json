@@ -21,8 +21,14 @@
     "@angular/platform-browser": "^9.1.13",
     "@angular/platform-browser-dynamic": "~9.1.13",
     "@angular/router": "~9.1.13",
+    "docxtemplater": "^3.56.0",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

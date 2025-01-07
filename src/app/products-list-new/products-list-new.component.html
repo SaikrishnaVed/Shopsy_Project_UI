@@ -1,64 +1,88 @@
 <div *ngIf="isLoading" class="spinner-container">
-    <mat-spinner></mat-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!isLoading">
+  <div class="button-container">
     <button mat-raised-button color="primary" class="add-new-product-button" (click)="onAddNewProduct()">
       <mat-icon>add</mat-icon>
       Add New Product
     </button>
+    <!-- <button mat-raised-button color="accent" (click)="onDownloadProducts()">
+      <mat-icon>download</mat-icon>
+      Download Products
+    </button> -->
+
+    <!-- <button mat-raised-button color="primary" (click)="downloadPDF()">
+      <mat-icon>download</mat-icon>
+      Download as PDF
+    </button>  -->
+      <div *ngIf="!isLoading">
+        <div class="button-container">
+          <mat-form-field>
+              <label class="form-label">Choose File Format</label>
+              <mat-select [(value)]="selectedFormat">
+                <mat-option value="pdf">PDF</mat-option>
+                <mat-option value="csv">CSV</mat-option>
+                <mat-option value="xlsx">XLSX</mat-option>
+                <mat-option value="word">Word</mat-option>
+              </mat-select>
+          </mat-form-field>
+      
+          <button mat-raised-button color="primary" (click)="downloadFile()">
+            <mat-icon>download</mat-icon>
+            Download
+          </button> 
+        </div>
+      </div>      
+  </div>
 </div>
 
-<!-- <div class="mat-elevation-z8"> -->
-  <div class="table-width">
-    <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
-  
-      <ng-container matColumnDef="product_Name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.product_Name}} </td>
-      </ng-container>
+<div class="table-width" id="productTable" >
+  <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+    <ng-container matColumnDef="product_Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.product_Name }} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="list_Price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by price"> Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.list_Price}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by quantity"> Quantity </th>
-        <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Color"> Color </th>
-        <td mat-cell *matCellDef="let element"> {{element.color}} </td>
-      </ng-container>
+    <ng-container matColumnDef="list_Price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+      <td mat-cell *matCellDef="let element"> {{ element.list_Price }} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="model_Year">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by model Year"> Model Year </th>
-        <td mat-cell *matCellDef="let element"> {{element.model_Year}} </td>
-      </ng-container>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+      <td mat-cell *matCellDef="let element"> {{ element.quantity }} </td>
+    </ng-container>
 
-      <!-- Actions Column -->
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+      <td mat-cell *matCellDef="let element"> {{ element.color }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="model_Year">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Model Year </th>
+      <td mat-cell *matCellDef="let element"> {{ element.model_Year }} </td>
+    </ng-container>
+
     <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element" class="actions-cls">
-          <button mat-fab color="accent" (click)="onEdit(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-fab color="warn" (click)="onDelete(element)" aria-label="delete icon">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element" class="actions-cls">
+        <button mat-fab color="primary" (click)="onPreview()">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-fab color="accent" (click)="onEdit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-fab color="warn" (click)="onDelete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   showFirstLastButtons
-                   aria-label="Select page of products"
-                   class="table-width">
-    </mat-paginator>
-  </div>
-  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of products"></mat-paginator>
+</div>

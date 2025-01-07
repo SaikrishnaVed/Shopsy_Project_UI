@@ -36,7 +36,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DateFormatPipe } from './date-format.pipe';
-// import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ProductPreviewDialogComponent } from './product-preview-dialog/product-preview-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { DateFormatPipe } from './date-format.pipe';
     UserListComponent,
     ProfilePageComponent,
     DateFormatPipe,
-    
+    ProductPreviewDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -77,9 +78,10 @@ import { DateFormatPipe } from './date-format.pipe';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSelectModule,
+    MatDialogModule
     // MatSnackBar
   ],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
