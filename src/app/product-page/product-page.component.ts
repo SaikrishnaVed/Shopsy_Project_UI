@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../app.service';
-// import { ChatService } from '../services/chat.service'; 
-// import { Product } from '../products-list/products-list.component';
 
 @Component({
   selector: 'app-product-page',
@@ -11,7 +9,7 @@ import { AppService } from '../app.service';
 })
 export class ProductPageComponent implements OnInit {
   product: any;
-  isLoading = true;
+  isLoading = false;
   productId: number;
   staticComments = [
     { user: 'John Doe', comment: 'Great product! Highly recommend.', rating: 5 },
@@ -28,10 +26,10 @@ export class ProductPageComponent implements OnInit {
     private appService: AppService,
     private route: ActivatedRoute,
     private router: Router,
-    // private chatservice: ChatService
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userId = Number(localStorage.getItem('userId'));
     this.productId = Number(localStorage.getItem('productPageId'));
     if (this.productId) {
@@ -41,8 +39,7 @@ export class ProductPageComponent implements OnInit {
       alert('Invalid Product ID');
       this.router.navigate(['/allproducts']);
     }
-
-    // alert(product.cartcount);
+    this.isLoading = false;
   }
 
   getProductDetails(productId: number): void {
@@ -52,6 +49,7 @@ export class ProductPageComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Error fetching product details:', err);
         alert('Error fetching product details.');
         this.router.navigate(['/allproducts']);
@@ -61,37 +59,28 @@ export class ProductPageComponent implements OnInit {
 
   // Add item to cart
     addToCart(product: Product): void {
-      //this.isLoading = true;
       this.userId = Number(localStorage.getItem('userId'));
       product.cartcount = 1;
-      // if (product.cartCount === 0) {
         const cartItem = {
           userId: this.userId,
           product_Id: product.product_Id,
           Quantity: 1,
         };
   
-        this.appService.AddCartItem(cartItem).subscribe({
-          next: () => {
-            //this.isLoading = false;
-            // product.cartCount = 1;
-            // this.cartCount = 1;
-            console.log('Item added to cart');
-          },
-          error: (err) => {
-            //this.isLoading = false;
-            console.error('Error adding item to cart:', err);
-          },
-        });
-      // }
+      this.appService.AddCartItem(cartItem).subscribe({
+        next: () => {
+          console.log('Item added to cart');
+        },
+        error: (err) => {
+          console.error('Error adding item to cart:', err);
+        },
+      });
     }
   
     // Increment item count in cart
     incrementCount(product: Product): void {
-      //this.isLoading = true;
       product.cartcount++;
       if (product.cartcount < product.quantity) {
-        // product.cartCount++;
         const updatedCartItem = {
           cart_Id: 0,
           userId: Number(localStorage.getItem('userId')),
@@ -100,12 +89,9 @@ export class ProductPageComponent implements OnInit {
         };
         this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
           next: () => {
-            //this.isLoading = false;
-            // this.cartCount++;  // Increment cart count in UI
             console.log('Cart item incremented');
           },
           error: (err) => {
-            //this.isLoading = false;
             console.error('Error incrementing cart item:', err);
           },
         });
@@ -114,30 +100,19 @@ export class ProductPageComponent implements OnInit {
   
     // Decrement item count in cart
     decrementCount(product: Product): void {
-      // //this.isLoading = true;
       if (product.cartcount >= 1) {
         product.cartcount--;
-        // product.cartCount--;
-        // if(product.cartcount == 0){
-        //   this.removeFromCart(product);
-        // }
-        // else{
         const updatedCartItem = {
           cart_Id: 0,
           userId: Number(localStorage.getItem('userId')),
           product_Id: product.product_Id,
           Quantity: product.cartcount,
         };
-        // product.product_id hardcoded to 3 for testing.
         this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
           next: () => {
-            //this.isLoading = false;
-            // this.cartCount--;
-            // product.cartCount--;
             console.log('Cart item decremented');
           },
           error: (err) => {
-            //this.isLoading = false;
             console.error('Error decrementing cart item:', err);
           },
         });
@@ -151,7 +126,6 @@ export class ProductPageComponent implements OnInit {
       product.isfavourite = !product.isfavourite;
       const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.isfavourite };
   
-      // if (product.isfavourite) {
         this.appService.AddToWishList(wishItem).subscribe({
           next: () => {
             this.productList.forEach((p) => {
@@ -175,7 +149,14 @@ export class ProductPageComponent implements OnInit {
     fetchFeedbacks(product_Id: any): void {
       this.appService.GetAllFeedbacks(product_Id).subscribe({
         next: (response) => {
-          this.dynamicComments = response;
+          this.dynamicComments = response;     
+            this.dynamicComments.forEach((c) => {
+              if (c.userId === this.userId) {
+                this.newComment = c.comments;
+                this.newRating = c.rating;
+              }
+            });
+
           sessionStorage.setItem('productPageCardData', response);
         },
         error: (err) => {
@@ -192,19 +173,19 @@ export class ProductPageComponent implements OnInit {
       }
       
       const feedback = {
-        Id: 0, // Assuming 0 for new feedback
+        Id: 0,
         rating: this.newRating,
         comments: this.newComment.trim(),
         userId: Number(localStorage.getItem('userId')),
         product_Id: this.productId,
         DateCreated: new Date(),
-        username: localStorage.getItem('username'), // Replace with actual logged-in user
+        username: localStorage.getItem('username'),
       };
       if (confirm('Are you sure you want to update this feedback?')) {
         this.appService.AddOrUpdateFeedback(feedback).subscribe({
         next: () => {
           alert('Feedback added successfully');
-          this.dynamicComments.push(feedback); // Update comments dynamically
+          this.dynamicComments.push(feedback);
           this.newRating = 0;
           this.newComment = '';
           this.fetchFeedbacks(feedback.product_Id);
@@ -222,7 +203,6 @@ export class ProductPageComponent implements OnInit {
         this.appService.DeleteFeedback(feedback).subscribe({
           next: () => {
             alert('Feedback deleted successfully.');
-            // Remove feedback from dynamicComments
             this.dynamicComments = this.dynamicComments.filter((f) => f.Id !== feedback.Id);
             this.fetchFeedbacks(feedback.product_Id);
           },

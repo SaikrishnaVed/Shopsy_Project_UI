@@ -74,8 +74,69 @@
           matInput
           name="dateOfBirth"
           [(ngModel)]="user.dateOfBirth"
+          [max]="maxDate"
           required
           class="form-control"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <input
+          type="text"
+          matInput
+          name="address"
+          [(ngModel)]="user.address"
+          required
+          minlength="3"
+          class="form-control"
+          placeholder="Enter address"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label class="form-label">Country</label>
+        <input
+          type="text"
+          matInput
+          name="country"
+          [(ngModel)]="user.country"
+          required
+          minlength="3"
+          class="form-control"
+          placeholder="Enter country"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label class="form-label">State</label>
+        <input
+          type="text"
+          matInput
+          name="state"
+          [(ngModel)]="user.state"
+          required
+          minlength="3"
+          class="form-control"
+          placeholder="Enter state"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input
+          type="text"
+          matInput
+          name="city"
+          [(ngModel)]="user.city"
+          required
+          minlength="3"
+          class="form-control"
+          placeholder="Enter city"
         />
       </div>
   

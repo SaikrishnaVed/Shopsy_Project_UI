@@ -1,5 +1,5 @@
 *{
-    background-color: rgb(141, 226, 134);
+    background-color: rgb(198, 238, 195);
 }
 
 .product-page-container {
@@ -116,7 +116,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin-bottom: 20px;
-  background-color: rgb(148 213 142) !important;
+  background-color: rgb(255, 255, 255) !important;
 }
 
 .product-image {
@@ -157,7 +157,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full height to center the spinner */
+  height: 100vh;
 }
 
 .delete-feedback-button {

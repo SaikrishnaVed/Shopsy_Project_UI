@@ -108,4 +108,3 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.editingRow = null;
   }
 }
-  

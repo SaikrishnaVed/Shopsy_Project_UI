@@ -10,10 +10,11 @@ import { AppService } from '../app.service';
 })
 export class LoginComponent {
   loginData = { UserName: '', Password: '' };
-
+  isLoading = false;
   constructor(private http: HttpClient, private router: Router, private appService: AppService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     if(localStorage.getItem('token') != undefined){
       if(localStorage.getItem('role') == "admin")
         this.router.navigate(['/products']);
@@ -23,10 +24,12 @@ export class LoginComponent {
     else{
       this.router.navigate(['/login']);
     }
+    this.isLoading = false;
   }
 
   onLoginSubmit(form: any): void {
     if (form.valid) {
+      this.isLoading = true;
       this.appService.LoginUser(this.loginData).subscribe({
         next: (response: any) => {
           if(response){
@@ -46,8 +49,10 @@ export class LoginComponent {
             else if(payload.role === 'user')
               this.router.navigate(['/allproducts']);
           }
+          this.isLoading = false;
         },
         error: (err) => {
+          this.isLoading = false;
           // console.error('Error fetching product list:', err);
           alert('Invalid username or password');
           this.router.navigate(['/login']);

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service'; // Update the path as per your project structure
 import { DatePipe } from '@angular/common';
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import { DateFormatPipe } from '../date-format.pipe';
 
 @Component({
   selector: 'app-profile-page',
@@ -12,6 +10,7 @@ import { DatePipe } from '@angular/common';
 })
 export class ProfilePageComponent implements OnInit {
   isLoading = false;
+  maxDate: string;
   userId = Number(localStorage.getItem('userId'));
   user = {
     Id: this.userId,
@@ -19,12 +18,19 @@ export class ProfilePageComponent implements OnInit {
     email: '',
     phone: '',
     gender: '',
-    dateOfBirth: ''
+    dateOfBirth: '',
+    address: '',
+    country: '',
+    state: '',
+    city: ''
   };
 
   constructor(private appService: AppService, private dateFormatPipe: DatePipe) {}
 
   ngOnInit(): void {
+    const today = new Date();
+    const tenYearsAgo = new Date(today.getFullYear() - 15, today.getMonth(), today.getDate());
+    this.maxDate = tenYearsAgo.toISOString().split('T')[0];
     this.fetchUserDetails(this.userId);
   }
 
@@ -33,13 +39,6 @@ export class ProfilePageComponent implements OnInit {
     this.appService.GetUserById(userId).subscribe({
       next: (response) => {
         this.user = response;
-        // if (this.user.dateOfBirth) {
-        //   const datePipe = new DatePipe('en-US');
-        //   this.user.dateOfBirth = datePipe.transform(
-        //     this.user.dateOfBirth,
-        //     'dd-mm-yy' // Format suitable for input type="date"
-        //   );
-        // }
         if (this.user.dateOfBirth) {
           this.user.dateOfBirth = this.dateFormatPipe.transform(
             this.user.dateOfBirth,
@@ -51,31 +50,30 @@ export class ProfilePageComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-        // this.snackBar.open('Failed to load user details.', 'Close', { duration: 3000 });
       }
     });
   }
 
   onSubmit(profileForm: any): void {
     if (profileForm.valid) {
-      this.isLoading = true;
-      this.appService.UpdateUserDetails(this.user).subscribe({
-        next: () => {
-          this.isLoading = false;
-          // this.snackBar.open('Profile updated successfully.', 'Close', { duration: 3000 });
-        },
-        error: () => {
-          this.isLoading = false;
-          // this.snackBar.open('Failed to update profile.', 'Close', { duration: 3000 });
-        }
-      });
+      if (confirm('Are you sure you want to update details?')) {
+        this.isLoading = true;
+        this.appService.UpdateUserDetails(this.user).subscribe({
+          next: () => {
+            this.isLoading = false;
+            alert('User profile updated successfully.');
+          },
+          error: () => {
+            this.isLoading = false;
+          }
+        });
+      }
     } else {
-      // this.snackBar.open('Please correct the errors in the form.', 'Close', { duration: 3000 });
+      alert('Invalid form details. Please fill valid fields.');
     }
   }
 
   resetForm(profileForm: any): void {
     profileForm.resetForm();
-    // this.fetchUserDetails(this.userId);
   }
 }

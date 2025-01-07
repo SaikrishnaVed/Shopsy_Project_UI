@@ -59,37 +59,10 @@
       </mat-tab>
   
       <!-- Ratings and Comments Tab -->
-      <!-- <mat-tab label="Ratings & Comments">
-        <div class="ratings-comments">
-          <h3>Customer Ratings & Comments</h3>
-          <div class="rating-item" *ngFor="let comment of dynamicComments">
-            <p><strong>{{ comment.username }}</strong>: {{ comment.comments }}</p>
-            <p>Rating:
-              <span *ngFor="let star of [].constructor(comment.rating)">
-                ⭐
-              </span>
-              ({{ comment.rating }}/5)
-            </p>
-          </div>
-          <div *ngIf="dynamicComments.length === 0">
-            <p><strong>No rating & comments.</strong></p>
-          </div>
-        </div>
-      </mat-tab>       -->
-
-      <!-- Ratings and Comments Tab -->
       <mat-tab label="Ratings & Comments">
         <div class="ratings-comments">
           <h3>Customer Ratings & Comments</h3>
-          <!-- <div class="rating-item" *ngFor="let comment of dynamicComments">
-            <p><strong>{{ comment.username }}</strong>: {{ comment.comments }}</p>
-            <p>
-              Rating:
-              <span *ngFor="let star of [].constructor(comment.rating)">⭐</span>
-              ({{ comment.rating }}/5)
-            </p>
-          </div> -->
-
+          
           <div class="rating-item" *ngFor="let comment of dynamicComments">
             <p><strong>{{ comment.username }}</strong>: {{ comment.comments }}</p>
             <p>
@@ -107,7 +80,6 @@
             </button>
           </div>
 
-          
           <div *ngIf="dynamicComments?.length === 0">
             <p><strong>No rating & comments.</strong></p>
           </div>

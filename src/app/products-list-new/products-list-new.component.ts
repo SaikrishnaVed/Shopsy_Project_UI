@@ -52,7 +52,7 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   constructor(
       private appService: AppService,
       private router: Router,
-      private liveAnnouncer: LiveAnnouncer,
+      // private liveAnnouncer: LiveAnnouncer,
       private dataService: DataService
     ) {}
 
@@ -64,6 +64,7 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
         this.GetProductList();
       }
     );
+    
     this.isLoading = false;
   }
 
@@ -83,8 +84,6 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
         this.isLoading = false;
         if (response?.items) {
           this.productList = response.items;
-          // this.productList.paginator = this.paginator;
-          // this.productList.sort = this.sort;
           this.dataSource.data = response.items;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
