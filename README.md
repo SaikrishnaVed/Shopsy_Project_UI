@@ -1,5 +1,16 @@
 # Shopsy4
 
+Configurations needed to work with angular.
+---------------------------------------------
+Angular CLI: 9.1.15
+Node: 12.22.12
+OS: win32 x64
+
+Angular: 9.1.13
+... animations, common, compiler, compiler-cli, core, forms
+... platform-browser, platform-browser-dynamic, router
+Ivy Workspace: Yes
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.13.
 
 ## Development server
