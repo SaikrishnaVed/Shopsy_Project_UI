@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { CartItem } from '../cart/cart.component';
@@ -9,36 +9,13 @@ import { ChatService } from '../services/chat.service';
 @Component({
   selector: 'app-products-cards',
   templateUrl: './products-cards.component.html',
-  styleUrls: ['./products-cards.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./products-cards.component.css']
 })
 export class ProductsCardsComponent implements OnInit {
   userMessage: string = '';
   messages: string[] = [];
 
   constructor(private appService: AppService, private router: Router, private dataService: DataService, private chatservice: ChatService) { }
-
-  ngOnInit(): void {
-    // if(!Boolean(sessionStorage.getItem('isWishListFilter'))){
-    //   this.filter.isWishListFilter = true;
-    // }
-    // else{
-    //   this.filter.isWishListFilter = false;
-    // }
-
-    this.isLoading = true;
-    this.subscription = this.dataService.currentMessage.subscribe(
-      (message: string) => {
-        this.filter.SearchTerm = message;
-        this.GetProductList();
-      }
-    );
-    this.isLoading = false;
-    // this.chatservice.saveConversation(this.userMessage).subscribe(response => {
-    //   this.messages.push(response.data);
-    // });
-  }
-  
 
   // cartCount: number;
   productList: Product[] = [];
@@ -55,6 +32,18 @@ export class ProductsCardsComponent implements OnInit {
   private subscription: Subscription;
   userId: number;
 
+  ngOnInit(): void {
+
+    this.isLoading = true;
+    this.subscription = this.dataService.currentMessage.subscribe(
+      (message: string) => {
+        this.filter.SearchTerm = message;
+        this.GetProductList();
+      }
+    );
+    this.isLoading = false;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -68,11 +57,8 @@ export class ProductsCardsComponent implements OnInit {
         if (response && response?.items) {
           this.productList = response.items.map((product: Product) => ({
             ...product,
-            // cartCount: 0
           }));
-          console.log('++++ ' + this.productList);
-          console.log(response.items);
-          
+          console.log(this.productList);
         } else {
           console.error('No items in response');
         }

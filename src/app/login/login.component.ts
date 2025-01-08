@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AppService } from '../app.service';
 export class LoginComponent {
   loginData = { UserName: '', Password: '' };
   isLoading = false;
-  constructor(private http: HttpClient, private router: Router, private appService: AppService) {}
+  constructor(private http: HttpClient, private router: Router, private appService: AppService, private data: DataService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -33,6 +34,7 @@ export class LoginComponent {
       this.appService.LoginUser(this.loginData).subscribe({
         next: (response: any) => {
           if(response){
+            this.data.updateRole(response?.role); // Update role dynamically
             console.log(response?.token);
             console.log(response?.role);
             console.log(response?.userId);

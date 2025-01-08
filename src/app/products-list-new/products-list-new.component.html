@@ -8,15 +8,6 @@
       <mat-icon>add</mat-icon>
       Add New Product
     </button>
-    <!-- <button mat-raised-button color="accent" (click)="onDownloadProducts()">
-      <mat-icon>download</mat-icon>
-      Download Products
-    </button> -->
-
-    <!-- <button mat-raised-button color="primary" (click)="downloadPDF()">
-      <mat-icon>download</mat-icon>
-      Download as PDF
-    </button>  -->
       <div *ngIf="!isLoading">
         <div class="button-container">
           <mat-form-field>
@@ -25,11 +16,11 @@
                 <mat-option value="pdf">PDF</mat-option>
                 <mat-option value="csv">CSV</mat-option>
                 <mat-option value="xlsx">XLSX</mat-option>
-                <mat-option value="word">Word</mat-option>
+                <!-- <mat-option value="word">Word</mat-option> -->
               </mat-select>
           </mat-form-field>
       
-          <button mat-raised-button color="primary" (click)="downloadFile()">
+          <button mat-raised-button color="primary" class="downcls" (click)="downloadFile()">
             <mat-icon>download</mat-icon>
             Download
           </button> 

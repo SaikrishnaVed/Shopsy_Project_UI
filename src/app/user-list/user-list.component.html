@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="spinner-container">
     <mat-spinner></mat-spinner>
   </div>
-  
+  <div class="user-grid">
   <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
     <!-- User Name -->
     <ng-container matColumnDef="userName">
@@ -95,4 +95,4 @@
     showFirstLastButtons
     aria-label="Select page of users"
   ></mat-paginator>
-  
+</div>

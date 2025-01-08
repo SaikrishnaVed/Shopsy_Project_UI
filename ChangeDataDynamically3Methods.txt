@@ -1,0 +1,171 @@
+The issue you're encountering arises because the `ngOnInit` lifecycle hook in Angular is only called once when the component is initialized, and changes to `localStorage` (e.g., the admin role) during login or other actions don't automatically trigger Angular's change detection.
+
+To solve this issue and ensure that `isAdminPage` dynamically updates when the admin role changes, you can use one of the following approaches:
+
+---
+
+### **1. Use BehaviorSubject for Role State Management**
+
+Create a shared service to manage the `role` state using a `BehaviorSubject`. This ensures the navbar dynamically reacts to changes in the role.
+
+#### **Shared Service**
+```typescript
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RoleService {
+  private roleSubject = new BehaviorSubject<string>(localStorage.getItem('role') || '');
+  role$ = this.roleSubject.asObservable();
+
+  updateRole(role: string): void {
+    localStorage.setItem('role', role);
+    this.roleSubject.next(role);
+  }
+
+  clearRole(): void {
+    localStorage.removeItem('role');
+    this.roleSubject.next('');
+  }
+}
+```
+
+#### **Login Component Update**
+In the `LoginComponent`, update the `role` after login:
+```typescript
+import { RoleService } from '../role.service';
+
+constructor(private roleService: RoleService, /* other services */) {}
+
+onLoginSubmit(form: any): void {
+  if (form.valid) {
+    this.isLoading = true;
+    this.appService.LoginUser(this.loginData).subscribe({
+      next: (response: any) => {
+        if (response) {
+          const payload = JSON.parse(atob(response.token.split('.')[1]));
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userId', response?.userId);
+          localStorage.setItem('username', response?.username);
+          this.roleService.updateRole(payload.role); // Update role dynamically
+          if (payload.role === 'admin') {
+            this.router.navigate(['/productslist']);
+          } else {
+            this.router.navigate(['/allproducts']);
+          }
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        alert('Invalid username or password');
+        this.router.navigate(['/login']);
+        localStorage.clear();
+      },
+    });
+  }
+}
+```
+
+#### **AppComponent Update**
+Subscribe to the `role$` observable to dynamically update the `isAdminPage` state:
+```typescript
+import { RoleService } from './role.service';
+
+constructor(private roleService: RoleService, private router: Router, /* other services */) {}
+
+ngOnInit(): void {
+  this.subscription = this.data.currentMessage.subscribe((message) => (this.SearchTerm = message));
+  this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd) {
+      this.isLoginPage = ['/login', '/register'].includes(this.router.url);
+    }
+  });
+
+  // Listen for role changes
+  this.roleService.role$.subscribe((role) => {
+    this.isAdminPage = role === 'admin';
+    this.username = localStorage.getItem('username');
+  });
+}
+
+logout(): void {
+  localStorage.clear();
+  this.roleService.clearRole(); // Reset role in service
+  this.router.navigate(['/login']);
+}
+```
+
+---
+
+### **2. Trigger Change Detection Manually**
+If you want to avoid a service, you can use Angular's `ChangeDetectorRef` to manually trigger change detection when the role changes.
+
+#### **AppComponent Update**
+Add `ChangeDetectorRef` and call `detectChanges()` whenever the role changes:
+```typescript
+import { ChangeDetectorRef } from '@angular/core';
+
+constructor(private cdr: ChangeDetectorRef, private router: Router, /* other services */) {}
+
+ngOnInit(): void {
+  this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd) {
+      this.isLoginPage = ['/login', '/register'].includes(this.router.url);
+    }
+  });
+
+  this.isAdminPage = localStorage.getItem('role') === 'admin';
+  this.username = localStorage.getItem('username');
+}
+
+onRoleChange(): void {
+  this.isAdminPage = localStorage.getItem('role') === 'admin';
+  this.cdr.detectChanges(); // Trigger change detection
+}
+
+logout(): void {
+  localStorage.clear();
+  this.isAdminPage = false;
+  this.cdr.detectChanges(); // Update the view after logout
+  this.router.navigate(['/login']);
+}
+```
+
+In the `LoginComponent`, trigger the `onRoleChange` method in the parent component after login:
+```typescript
+this.appService.LoginUser(this.loginData).subscribe({
+  next: (response: any) => {
+    if (response) {
+      const payload = JSON.parse(atob(response.token.split('.')[1]));
+      localStorage.setItem('role', payload.role);
+      // Notify AppComponent
+      const appComp = this.injector.get(AppComponent); // Import and inject AppComponent
+      appComp.onRoleChange();
+      if (payload.role === 'admin') {
+        this.router.navigate(['/productslist']);
+      } else {
+        this.router.navigate(['/allproducts']);
+      }
+    }
+  },
+});
+```
+
+---
+
+### **3. Reload the Component (Not Recommended)**
+Force a reload of the component using Angular's `Router`:
+```typescript
+this.router.navigateByUrl('/dummy-route', { skipLocationChange: true }).then(() => {
+  this.router.navigate(['/actual-route']);
+});
+```
+This approach is less clean and should be avoided unless necessary.
+
+---
+
+### **Preferred Solution**
+The **BehaviorSubject** approach is the most robust and scalable. It ensures that your app remains reactive and clean, with minimal manual intervention for change detection.

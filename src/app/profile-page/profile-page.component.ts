@@ -35,21 +35,20 @@ export class ProfilePageComponent implements OnInit {
   }
 
   fetchUserDetails(userId: number): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.appService.GetUserById(userId).subscribe({
       next: (response) => {
+        this.isLoading = false;
         this.user = response;
         if (this.user.dateOfBirth) {
           this.user.dateOfBirth = this.dateFormatPipe.transform(
             this.user.dateOfBirth,
             'yyyy-MM-dd'
           );
-        }
-        
-        this.isLoading = false;
+        }   
       },
       error: () => {
-        this.isLoading = false;
+        // this.isLoading = false;
       }
     });
   }

@@ -2,13 +2,11 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, SimpleChanges } 
 import { NavigationEnd, Router } from '@angular/router';
 import { DataService } from './data.service';
 import { Subscription } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'shopsy4';
@@ -17,8 +15,10 @@ export class AppComponent implements OnInit, OnDestroy {
   SearchTerm = '';
   subscription: Subscription;
   username: string;
-
-  constructor(private router: Router, private data: DataService, private cdr: ChangeDetectorRef) {}
+  // , private cdr: ChangeDetectorRef
+  constructor(private router: Router, private data: DataService) {
+    this.isAdminPage = localStorage.getItem('role') == 'admin';
+  }
 
   ngOnInit(): void {
     this.subscription = this.data.currentMessage.subscribe(message => this.SearchTerm = message)
@@ -26,9 +26,20 @@ export class AppComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         // Check if the current route is the login page
         this.isLoginPage = (this.router.url === '/login') || (this.router.url === '/register');
-        this.cdr.detectChanges();
+        
+        // Listen for role changes
+        this.data.role.subscribe((role) => {
+          this.isAdminPage = role === 'admin';
+          this.username = localStorage.getItem('username');
+        });
       }
     });
+
+    this.data.role.subscribe((role) => {
+      this.isAdminPage = role === 'admin';
+      this.username = localStorage.getItem('username');
+    });
+
     this.isAdminPage = localStorage.getItem('role') == 'admin';
     this.username = localStorage.getItem('username');
   }
@@ -55,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   logout(): void {
     localStorage.clear();
+    this.data.clearRole();
     this.router.navigate(['/login']);
   }
 }

@@ -18,13 +18,11 @@ import * as docxtemplater from 'docxtemplater';
 import { MatDialog } from '@angular/material/dialog';
 import autoTable from 'jspdf-autotable';
 import { ProductPreviewDialogComponent } from '../product-preview-dialog/product-preview-dialog.component';
-import {ChangeDetectionStrategy, inject} from '@angular/core';
 
 @Component({
   selector: 'app-products-list-new',
   templateUrl: './products-list-new.component.html',
-  styleUrls: ['./products-list-new.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./products-list-new.component.css']
 })
 export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   productList: any = [];
@@ -135,9 +133,9 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       case 'xlsx':
         this.downloadXLSX();
         break;
-      case 'word':
-        this.downloadWord();
-        break;
+      // case 'word':
+      //   this.downloadWord();
+      //   break;
       default:
         alert('Unsupported file format');
         break;
