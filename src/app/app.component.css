@@ -55,3 +55,126 @@ body {
   outline: none;
   border-color: #4CAF50;
 }
+
+.anime-icon i {
+  transition: transform 0.3s ease-in-out;
+}
+
+.anime-icon:hover i {
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* General Styles for Icons */
+.icon-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease-in-out;
+}
+
+.icon-link i {
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Unique Animations for Each Icon */
+.wishlist-icon:hover {
+  color: red;
+  animation: pulse 1s infinite;
+}
+
+.cart-icon:hover {
+  color: orange;
+  animation: wobble 1s infinite;
+}
+
+.profile-icon:hover {
+  color: green;
+  animation: bounce-in-out 1s infinite;
+}
+
+.admin-icon:hover {
+  color: blue;
+  animation: rotate 1s infinite linear;
+}
+
+.users-icon:hover {
+  color: purple;
+  animation: shake 0.8s infinite;
+}
+
+.products-icon:hover {
+  color: teal;
+  animation: grow-and-shrink 1s infinite;
+}
+
+/* Keyframes for Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes bounce-in-out {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes grow-and-shrink {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

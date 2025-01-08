@@ -6,7 +6,7 @@
   <div class="button-container">
     <button mat-raised-button color="primary" class="add-new-product-button" (click)="onAddNewProduct()">
       <mat-icon>add</mat-icon>
-      Add New Product
+      Add Product
     </button>
       <div *ngIf="!isLoading">
         <div class="button-container">
@@ -30,7 +30,7 @@
 </div>
 
 <div class="table-width" id="productTable" >
-  <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+  <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort >
     <ng-container matColumnDef="product_Name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
       <td mat-cell *matCellDef="let element"> {{ element.product_Name }} </td>
@@ -56,7 +56,7 @@
       <td mat-cell *matCellDef="let element"> {{ element.model_Year }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" class="act-cls">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element" class="actions-cls">
         <button mat-fab color="primary" (click)="onPreview()">

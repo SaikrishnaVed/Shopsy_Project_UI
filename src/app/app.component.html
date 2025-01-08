@@ -1,14 +1,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 <div class="navbar">
   <div class="brand">Shopsy</div>
   <div class="menu-allprod" *ngIf="!isLoginPage && isAdminPage">
-    <a href="#" routerLink="/productslist" title="Products Admin"><i class="fa fa-cogs" style="font-size:24px"></i></a>
+    <a href="#" routerLink="/productslist" title="Products Admin" class="icon-link">
+      <i class="fa fa-cogs admin-icon" style="font-size:24px"></i>
+    </a>
   </div>
   <div class="menu-allprod" *ngIf="!isLoginPage && isAdminPage">
-    <a href="#" routerLink="/userslist" title="Users Admin"><i class="fa fa-users" style="font-size:24px"></i></a>
+    <a href="#" routerLink="/userslist" title="Users Admin" class="icon-link">
+      <i class="fa fa-users users-icon" style="font-size:24px"></i>
+    </a>
   </div>
   <div class="menu-allprod" *ngIf="!isLoginPage">
-    <a href="#" routerLink="/allproducts" title="All Products"><i class="fa fa-th-large" style="font-size:24px"></i></a>
+    <a href="#" routerLink="/allproducts" title="All Products" class="icon-link">
+      <i class="fa fa-th-large products-icon" style="font-size:24px"></i>
+    </a>
+  </div>
+  <div class="menu-allprod" *ngIf="!isLoginPage">
+    <a href="#" title="Filters" class="anime-icon">
+      <i class="fas fa-filter"></i> Price range
+    </a>
   </div>
   <div class="search-box">
     <input
@@ -24,15 +36,15 @@
     <a href="#" *ngIf="isLoginPage" routerLink="/login" title="Login">Login</a>
     <a routerLink="/register" *ngIf="isLoginPage" title="Register">Don't have an account? Register here</a>
 
-    <a href="#" style="padding-right: 10px;" *ngIf="!isLoginPage" routerLink="/wishlistitems" title="WishList">
-      <i class="fa fa-heart" style="font-size:24px"></i>
+    <a href="#" style="padding-right: 10px;" *ngIf="!isLoginPage" routerLink="/wishlistitems" title="WishList" class="icon-link">
+      <i class="fa fa-heart wishlist-icon" style="font-size:24px"></i>
     </a>
-    <a href="#" style="padding-right: 10px;" *ngIf="!isLoginPage" routerLink="/openCart" title="Cart">
-      <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+    <a href="#" style="padding-right: 10px;" *ngIf="!isLoginPage" routerLink="/openCart" title="Cart" class="icon-link">
+      <i class="fa fa-shopping-cart cart-icon" style="font-size:24px"></i>
     </a>
-    <a href="#" *ngIf="!isLoginPage" style="color: rgb(96, 187, 116);" routerLink="/profilepage" title="{{username}}">
-      <i class="fa fa-user" style="font-size:24px"></i>
-    </a>    
+    <a href="#" *ngIf="!isLoginPage" style="color: rgb(96, 187, 116);" routerLink="/profilepage" title="{{username}}" class="icon-link">
+      <i class="fa fa-user profile-icon" style="font-size:24px"></i>
+    </a>
     <a href="#" *ngIf="!isLoginPage" (click)="logout()" title="Logout">Logout</a>
   </div>
 </div>

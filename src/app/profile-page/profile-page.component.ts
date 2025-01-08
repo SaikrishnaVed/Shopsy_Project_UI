@@ -12,6 +12,7 @@ export class ProfilePageComponent implements OnInit {
   isLoading = false;
   maxDate: string;
   userId = Number(sessionStorage.getItem('userId'));
+  startDate = new Date(1990, 0, 1);
   user = {
     Id: this.userId,
     userName: '',

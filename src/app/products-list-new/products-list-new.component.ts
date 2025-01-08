@@ -114,14 +114,6 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
   downloadFile(): void {
     switch (this.selectedFormat) {
       case 'pdf':

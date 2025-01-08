@@ -106,10 +106,14 @@
 }
 
 ::ng-deep .mat-step-icon-content, .mat-step-icon .mat-icon {
-  color: black;
+  color: #ffffff;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon {
   background-color: #7b1fa2;
   /* color: #fff; */
 }
+
+/* .mat-step-icon-content, .mat-step-icon[_ngcontent-lpm-c199] .mat-icon[_ngcontent-lpm-c199] {
+  color: #ffffff;
+} */
