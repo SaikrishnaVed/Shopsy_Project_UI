@@ -26,7 +26,6 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ChatComponent } from './chat/chat.component';
 import { ProductsListNewComponent } from './products-list-new/products-list-new.component';
 import { WishListProductsComponent } from './wish-list-products/wish-list-products.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -51,7 +50,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     DecimalFormatPipe,
     AddProductComponent,
     ProductPageComponent,
-    ChatComponent,
     ProductsListNewComponent,
     WishListProductsComponent,
     UserListComponent,

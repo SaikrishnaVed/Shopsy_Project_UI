@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { ChatService } from '../services/chat.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,16 +13,9 @@ export class WishListProductsComponent implements OnInit {
 userMessage: string = '';
   messages: string[] = [];
 
-  constructor(private appService: AppService, private router: Router, private dataService: DataService, private chatservice: ChatService) { }
+  constructor(private appService: AppService, private router: Router, private dataService: DataService) { }
 
   ngOnInit(): void {
-    // if(!Boolean(sessionStorage.getItem('isWishListFilter'))){
-    //   this.filter.isWishListFilter = true;
-    // }
-    // else{
-    //   this.filter.isWishListFilter = false;
-    // }
-
     this.filter.isWishListFilter = true;
     this.isLoading = true;
     this.subscription = this.dataService.currentMessage.subscribe(
@@ -33,13 +25,8 @@ userMessage: string = '';
       }
     );
     this.isLoading = false;
-    // this.chatservice.saveConversation(this.userMessage).subscribe(response => {
-    //   this.messages.push(response.data);
-    // });
   }
   
-
-  // cartCount: number;
   productList: Product[] = [];
   isLoading = false;
   filter = {
@@ -60,14 +47,11 @@ userMessage: string = '';
 
   // Get list of products
   GetProductList(): void {
-    //this.isLoading = true;
     this.appService.GetAllProducts(this.filter).subscribe({
       next: (response: any) => {
-        //this.isLoading = false;
         if (response && response?.items) {
           this.productList = response.items.map((product: Product) => ({
             ...product,
-            // cartCount: 0
           }));
           console.log('++++ ' + this.productList);
           console.log(response.items);
@@ -77,7 +61,6 @@ userMessage: string = '';
         }
       },
       error: (err) => {
-        //this.isLoading = false;
         this.router.navigate(['/login']);
       },
     });
@@ -85,10 +68,8 @@ userMessage: string = '';
 
   // Add item to cart
   addToCart(product: Product): void {
-    //this.isLoading = true;
     this.userId = Number(sessionStorage.getItem('userId'));
     product.cartcount = 1;
-    // if (product.cartCount === 0) {
       const cartItem = {
         userId: this.userId,
         product_Id: product.product_Id,
@@ -97,25 +78,18 @@ userMessage: string = '';
 
       this.appService.AddCartItem(cartItem).subscribe({
         next: () => {
-          //this.isLoading = false;
-          // product.cartCount = 1;
-          // this.cartCount = 1;
           console.log('Item added to cart');
         },
         error: (err) => {
-          //this.isLoading = false;
           console.error('Error adding item to cart:', err);
         },
       });
-    // }
   }
 
   // Increment item count in cart
   incrementCount(product: Product): void {
-    //this.isLoading = true;
     product.cartcount++;
     if (product.cartcount < product.quantity) {
-      // product.cartCount++;
       const updatedCartItem = {
         cart_Id: 0,
         userId: Number(sessionStorage.getItem('userId')),
@@ -124,12 +98,9 @@ userMessage: string = '';
       };
       this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
         next: () => {
-          //this.isLoading = false;
-          // this.cartCount++;  // Increment cart count in UI
           console.log('Cart item incremented');
         },
         error: (err) => {
-          //this.isLoading = false;
           console.error('Error incrementing cart item:', err);
         },
       });
@@ -138,30 +109,19 @@ userMessage: string = '';
 
   // Decrement item count in cart
   decrementCount(product: Product): void {
-    // //this.isLoading = true;
     if (product.cartcount >= 1) {
       product.cartcount--;
-      // product.cartCount--;
-      // if(product.cartcount == 0){
-      //   this.removeFromCart(product);
-      // }
-      // else{
       const updatedCartItem = {
         cart_Id: 0,
         userId: Number(sessionStorage.getItem('userId')),
         product_Id: product.product_Id,
         Quantity: product.cartcount,
       };
-      // product.product_id hardcoded to 3 for testing.
       this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
         next: () => {
-          //this.isLoading = false;
-          // this.cartCount--;
-          // product.cartCount--;
           console.log('Cart item decremented');
         },
         error: (err) => {
-          //this.isLoading = false;
           console.error('Error decrementing cart item:', err);
         },
       });
@@ -169,22 +129,16 @@ userMessage: string = '';
     else{
       //this.isLoading = false;
     }
-    // }
   }
 
   // Remove item from cart
   removeFromCart(product: Product): void {
-    // //this.isLoading = true;
     product.cartcount = 0;
     this.appService.DeleteCartItem(product.product_Id).subscribe({
       next: () => {
-        //this.isLoading = false;
-        // this.cartCount = 0;
-        // product.cartCount = 0;
         console.log('Item removed from cart');
       },
       error: (err) => {
-        //this.isLoading = false;
         console.error('Error removing item from cart:', err);
       },
     });
@@ -194,7 +148,6 @@ userMessage: string = '';
     product.isfavourite = !product.isfavourite;
     const wishItem = { Id: 0, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
 
-    // if (product.Isfavourite) {
       this.appService.AddToWishList(wishItem).subscribe({
         next: () => {
           this.productList.forEach((p) => {
@@ -213,10 +166,6 @@ userMessage: string = '';
           alert('Failed to add to wishlist.');
         },
       });
-    // } else {
-    //   // Remove from wishlist logic if needed
-    //   alert(`${product.product_Name} removed from wishlist.`);
-    // }
   }
 
   productPage(product_Id: number): void {
@@ -224,7 +173,6 @@ userMessage: string = '';
       next: (response: any) => {
         if (response) {
           sessionStorage.setItem('productPageId', product_Id.toString());
-          //redirect to product page component.
           this.router.navigate(['/productPage']);
         }
         else{

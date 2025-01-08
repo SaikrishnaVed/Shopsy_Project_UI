@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CartItem } from '../cart/cart.component';
 import { Subscription } from 'rxjs';
 import { DataService } from '../data.service';
-import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-products-cards',
@@ -16,7 +15,7 @@ export class ProductsCardsComponent implements OnInit {
   messages: string[] = [];
   filteredProductList: Product[] = [];
   selectedPriceRanges: string[] = [];
-  constructor(private appService: AppService, private router: Router, private dataService: DataService, private chatservice: ChatService) { }
+  constructor(private appService: AppService, private router: Router, private dataService: DataService) { }
 
   productList: Product[] = [];
   isLoading = false;
@@ -27,7 +26,6 @@ export class ProductsCardsComponent implements OnInit {
     SortBy: "",
     IsAscending: false,
     Skip: 0,
-    // isWishListFilter: false
   };
   private subscription: Subscription;
   userId: number;
@@ -104,7 +102,6 @@ export class ProductsCardsComponent implements OnInit {
     //this.isLoading = true;
     this.userId = Number(sessionStorage.getItem('userId'));
     product.cartcount = 1;
-    // if (product.cartCount === 0) {
       const cartItem = {
         userId: this.userId,
         product_Id: product.product_Id,
@@ -114,8 +111,6 @@ export class ProductsCardsComponent implements OnInit {
       this.appService.AddCartItem(cartItem).subscribe({
         next: () => {
           //this.isLoading = false;
-          // product.cartCount = 1;
-          // this.cartCount = 1;
           console.log('Item added to cart');
         },
         error: (err) => {
@@ -131,7 +126,6 @@ export class ProductsCardsComponent implements OnInit {
     //this.isLoading = true;
     product.cartcount++;
     if (product.cartcount < product.quantity) {
-      // product.cartCount++;
       const updatedCartItem = {
         cart_Id: 0,
         userId: Number(sessionStorage.getItem('userId')),
@@ -141,7 +135,6 @@ export class ProductsCardsComponent implements OnInit {
       this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
         next: () => {
           //this.isLoading = false;
-          // this.cartCount++;  // Increment cart count in UI
           console.log('Cart item incremented');
         },
         error: (err) => {
@@ -157,23 +150,15 @@ export class ProductsCardsComponent implements OnInit {
     // //this.isLoading = true;
     if (product.cartcount >= 1) {
       product.cartcount--;
-      // product.cartCount--;
-      // if(product.cartcount == 0){
-      //   this.removeFromCart(product);
-      // }
-      // else{
       const updatedCartItem = {
         cart_Id: 0,
         userId: Number(sessionStorage.getItem('userId')),
         product_Id: product.product_Id,
         Quantity: product.cartcount,
       };
-      // product.product_id hardcoded to 3 for testing.
       this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
         next: () => {
           //this.isLoading = false;
-          // this.cartCount--;
-          // product.cartCount--;
           console.log('Cart item decremented');
         },
         error: (err) => {
@@ -185,22 +170,16 @@ export class ProductsCardsComponent implements OnInit {
     else{
       //this.isLoading = false;
     }
-    // }
   }
 
   // Remove item from cart
   removeFromCart(product: Product): void {
-    // //this.isLoading = true;
     product.cartcount = 0;
     this.appService.DeleteCartItem(product.product_Id).subscribe({
       next: () => {
-        //this.isLoading = false;
-        // this.cartCount = 0;
-        // product.cartCount = 0;
         console.log('Item removed from cart');
       },
       error: (err) => {
-        //this.isLoading = false;
         console.error('Error removing item from cart:', err);
       },
     });
@@ -209,8 +188,6 @@ export class ProductsCardsComponent implements OnInit {
   toggleWishlist(product: any): void {
     product.isfavourite = !product.isfavourite;
     const wishItem = { Id: 0, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
-
-    // if (product.isfavourite) {
       this.appService.AddToWishList(wishItem).subscribe({
         next: () => {
           this.productList.forEach((p) => {
@@ -236,7 +213,6 @@ export class ProductsCardsComponent implements OnInit {
       next: (response: any) => {
         if (response) {
           sessionStorage.setItem('productPageId', product_Id.toString());
-          //redirect to product page component.
           this.router.navigate(['/productPage']);
         }
         else{
@@ -248,7 +224,6 @@ export class ProductsCardsComponent implements OnInit {
       },
     });
   }
-  
 }
 
 export class Product {

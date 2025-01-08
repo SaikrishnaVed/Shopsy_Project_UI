@@ -202,7 +202,7 @@ export class AppService {
     
     // Get Products
   GetAllAuthUsers(): Observable<any> {
-    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });

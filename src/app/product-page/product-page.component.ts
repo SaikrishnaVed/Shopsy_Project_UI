@@ -17,7 +17,6 @@ export class ProductPageComponent implements OnInit {
     { user: 'David Wilson', comment: 'Satisfactory performance.', rating: 3 },
   ];
   dynamicComments: any[];
-  isChatVisible: boolean = true;
   productList: Product[] = [];
   userId: number;
   newRating = 0;

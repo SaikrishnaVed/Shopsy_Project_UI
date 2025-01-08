@@ -9,7 +9,6 @@
     <p>Your cart is empty!</p>
   </div>
 
-  <!-- Loop through cart items -->
   <div *ngFor="let item of cartItems" class="cart-item">
     <div class="cart-item-image">
       <img [src]="item.imagePath" alt="{{ item.product_name }}" />

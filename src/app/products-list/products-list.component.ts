@@ -25,7 +25,6 @@ export class ProductsListComponent implements OnInit {
   productList: any = [];
   isLoading = false;
   isReload = false;
-  // dataSource = new MatTableDataSource<Product>(this.productList);
   dataSource = new MatTableDataSource(this.productList);
   displayedColumns: string[] = [
     'product_Name',
@@ -58,137 +57,14 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    // this.subscription = this.dataService.currentMessage.subscribe(
-    //   (message: string) => {
-    //     this.filter.SearchTerm = message;
-    //     this.GetProductList();
-    //   }
-    // );
     this.GetProductList();
     this.isLoading = false;
-    // if(this.isReload){
-    //   window.location.reload();
-    //   this.isReload = false;
-    // }
   }
-
-  // ngAfterViewInit() {
-  //   this.sort.disableClear = true;
-  //   // this.sort.sort({disableClear: true, id:sortEnabledColumns.id,start:'asc'})
-
-  //   // this.dataSource.sort = this.sort;
-  //   // this.dataSource.paginator = this.paginator;
-
-  //   // Listen to pagination events
-  //   this.paginator.page.subscribe(() => {
-  //     this.filter.pageNumber = this.paginator.pageIndex + 1; // Page index starts at 0
-  //     this.filter.pageSize = this.paginator.pageSize;
-  //     this.GetProductList(); // Fetch data with updated pagination
-  //   });
-
-  //   // this.productList.paginator = this.paginator;
-  //   // this.productList.sort = this.sort;
-  // }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
-  // // Navigate to the first page
-  // onFirstPage(): void {
-  //   if (this.filter.pageNumber > 1) {
-  //     this.filter.pageNumber = 1;
-  //     this.paginator.pageIndex = 0;
-  //     this.GetProductList();
-  //   }
-  // }
-
-  // // Navigate to the last page
-  // onLastPage(totalPages: number): void {
-  //   if (this.filter.pageNumber < totalPages) {
-  //     this.filter.pageNumber = totalPages;
-  //     this.paginator.pageIndex = totalPages - 1;
-  //     this.GetProductList();
-  //   }
-  // }
-
-  // // Navigate to the previous page
-  // onPrevPage(): void {
-  //   if (this.filter.pageNumber > 1) {
-  //     this.filter.pageNumber--;
-  //     this.paginator.pageIndex = this.filter.pageNumber - 1;
-  //     this.GetProductList();
-  //   }
-  // }
-
-  // // Navigate to the next page
-  // onNextPage(totalPages: number): void {
-  //   if (this.filter.pageNumber < totalPages) {
-  //     this.filter.pageNumber++;
-  //     this.paginator.pageIndex = this.filter.pageNumber - 1;
-  //     this.GetProductList();
-  //   }
-  // }
-
-  // /** Announce the change in sort state for assistive technology. */
-  // announceSortChange(sortState: Sort) {
-  //   // This example uses English messages. If your application supports
-  //   // multiple language, you would internationalize these strings.
-  //   // Furthermore, you can customize the message to add additional
-  //   // details about the values being sorted.
-    
-  //    if (sortState.direction) {
-  //       if (!sortState.active || !sortState.direction) {
-  //         this.dataSource.data = this.productList; // Reset to original data
-  //         return;
-  //       }   
-
-  //     this.dataSource.data = this.productList.sort((a, b) => {
-  //       const isAsc = sortState.direction === 'asc';
-  //       switch (sortState.active) {
-  //         case 'product_name':
-  //           return this.compare(a.product_name, b.product_name, isAsc);
-  //         case 'list_price':
-  //           return this.compare(a.list_price, b.list_price, isAsc);
-  //         case 'quantity':
-  //           return this.compare(a.quantity, b.quantity, isAsc);
-  //         case 'model_year':
-  //           return this.compare(a.model_year, b.model_year, isAsc);
-  //         default:
-  //           return 0;
-  //       }
-  //     });
-  //     this.productList = this.dataSource.data;
-  //   }
-  // }
-
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-
-    // if (sortState.direction) {
-    //   this.liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    // } else {
-    //   this.liveAnnouncer.announce('Sorting cleared');
-    // }
-
-    // this.filter.SortBy = sortState.active;
-    // this.filter.IsAscending = sortState.direction === 'asc';
-    // this.GetProductList();
-
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  // ngOnDestroy(): void {
-  //   this.subscription.unsubscribe();
-  // }
 
   GetProductList(): void {
     this.isLoading = true;
@@ -197,8 +73,6 @@ export class ProductsListComponent implements OnInit {
         this.isLoading = false;
         if (response?.items) {
           this.productList = response.items;
-          // this.productList.paginator = this.paginator;
-          // this.productList.sort = this.sort;
           this.dataSource.data = response.items;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -237,7 +111,6 @@ export class ProductsListComponent implements OnInit {
   
     sessionStorage.setItem('editProduct', JSON.stringify(updatedProduct));
     sessionStorage.setItem('isEditMode', 'true');
-    // Navigate to the Add Product component
     this.router.navigate(['/addProduct']);
   }
 

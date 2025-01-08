@@ -55,7 +55,6 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   constructor(
       private appService: AppService,
       private router: Router,
-      // private liveAnnouncer: LiveAnnouncer,
       private dataService: DataService,
       private dialog: MatDialog
     ) {}
@@ -202,30 +201,9 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
     saveAs(blob, 'ProductList.docx');
   }
 
-  // onPreview(product: Product): void {
-  //   const dialogRef = this.dialog.open(ProductsListNewComponent, {
-  //     width: '400px', // Adjust the size of the dialog as needed
-  //     data: product  // Pass the product data to the dialog
-  //   });
-  
-  //   // Optionally, you can handle the result when the dialog is closed
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       console.log('The dialog was closed with result:', result);
-  //     }
-  //   });
-  // }  
-
   onReset(form: any): void {
     form.reset();
   }
-
-  // reloadCurrentRoute() {
-  //   let currentUrl = this.router.url;
-  //   this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-  //       this.router.navigate([currentUrl]);
-  //   });
-  // }
 
   onAddNewProduct(): void {
     sessionStorage.setItem('isEditMode', 'false');
@@ -248,7 +226,6 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   
     sessionStorage.setItem('editProduct', JSON.stringify(updatedProduct));
     sessionStorage.setItem('isEditMode', 'true');
-    // Navigate to the Add Product component
     this.router.navigate(['/addProduct']);
   }
 

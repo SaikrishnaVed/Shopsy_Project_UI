@@ -54,25 +54,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  // onSubmit(profileForm: any): void {
-  //   if (profileForm.valid) {
-  //     if (confirm('Are you sure you want to update details?')) {
-  //       this.isLoading = true;
-  //       this.appService.UpdateUserDetails(this.user).subscribe({
-  //         next: () => {
-  //           this.isLoading = false;
-  //           alert('User profile updated successfully.');
-  //         },
-  //         error: () => {
-  //           this.isLoading = false;
-  //         }
-  //       });
-  //     }
-  //   } else {
-  //     alert('Invalid form details. Please fill valid fields.');
-  //   }
-  // }
-
   onSubmit(): void {
   if (confirm('Are you sure you want to update details?')) {
     this.isLoading = true;
@@ -88,7 +69,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 }
-
 
   resetForm(profileForm: any): void {
     profileForm.resetForm();

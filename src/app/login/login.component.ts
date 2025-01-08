@@ -34,7 +34,7 @@ export class LoginComponent {
       this.appService.LoginUser(this.loginData).subscribe({
         next: (response: any) => {
           if(response){
-            this.data.updateRole(response?.role); // Update role dynamically
+            this.data.updateRole(response?.role);
             console.log(response?.token);
             console.log(response?.role);
             console.log(response?.userId);
@@ -43,9 +43,7 @@ export class LoginComponent {
             sessionStorage.setItem('role', payload.role);
             sessionStorage.setItem('userId', response?.userId);
             sessionStorage.setItem('username', response?.username);
-            // sessionStorage.setItem('role', response.role);
             if(payload.role === 'admin'){
-              // this.router.navigate(['/products']);
               this.router.navigate(['/productslist']);
             }
             else if(payload.role === 'user')
@@ -55,7 +53,6 @@ export class LoginComponent {
         },
         error: (err) => {
           this.isLoading = false;
-          // console.error('Error fetching product list:', err);
           alert('Invalid username or password');
           this.router.navigate(['/login']);
           sessionStorage.clear();
