@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DataService } from './data.service';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   SearchTerm = '';
   subscription: Subscription;
   username: string;
-  // , private cdr: ChangeDetectorRef
+
   constructor(private router: Router, private data: DataService) {
     this.isAdminPage = sessionStorage.getItem('role') == 'admin';
   }
@@ -60,7 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   GetProductsWishList(): void{
-    // sessionStorage.setItem('isWishListFilter', 'true');
     this.router.navigate(['/allproducts']);
   }
 

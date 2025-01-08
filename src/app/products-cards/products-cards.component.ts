@@ -14,10 +14,10 @@ import { ChatService } from '../services/chat.service';
 export class ProductsCardsComponent implements OnInit {
   userMessage: string = '';
   messages: string[] = [];
-
+  filteredProductList: Product[] = [];
+  selectedPriceRanges: string[] = [];
   constructor(private appService: AppService, private router: Router, private dataService: DataService, private chatservice: ChatService) { }
 
-  // cartCount: number;
   productList: Product[] = [];
   isLoading = false;
   filter = {
@@ -48,6 +48,33 @@ export class ProductsCardsComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  togglePriceRange(range: string): void {
+    const index = this.selectedPriceRanges.indexOf(range);
+    if (index === -1) {
+      this.selectedPriceRanges.push(range);
+    } else {
+      this.selectedPriceRanges.splice(index, 1);
+    }
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    if (this.selectedPriceRanges.length === 0) {
+      this.filteredProductList = [...this.productList]; // No filters applied
+      return;
+    }
+
+    this.filteredProductList = this.productList.filter((product) => {
+      return this.selectedPriceRanges.some((range) => {
+        const [min, max] = range.split('-').map(Number);
+        if(max < 10000)
+          return product.list_Price >= min && product.list_Price <= max;
+        else
+          return product.list_Price >= min;
+      });
+    });
+  }
+
   // Get list of products
   GetProductList(): void {
     this.isLoading = true;
@@ -58,6 +85,7 @@ export class ProductsCardsComponent implements OnInit {
           this.productList = response.items.map((product: Product) => ({
             ...product,
           }));
+          this.filteredProductList = this.productList;
           console.log(this.productList);
         } else {
           console.error('No items in response');
@@ -201,10 +229,6 @@ export class ProductsCardsComponent implements OnInit {
           alert('Failed to add to wishlist.');
         },
       });
-    // } else {
-    //   // Remove from wishlist logic if needed
-    //   alert(`${product.product_Name} removed from wishlist.`);
-    // }
   }
 
   productPage(product_Id: number): void {
@@ -233,7 +257,7 @@ export class Product {
   brand_id: number;
   category_id: number;
   model_year: number;
-  list_price: number;
+  list_Price: number;
   quantity: number;
   color: string;
   imagePath: string;

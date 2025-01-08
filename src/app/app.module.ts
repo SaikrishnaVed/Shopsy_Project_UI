@@ -83,7 +83,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatStepperModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
