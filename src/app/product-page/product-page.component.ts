@@ -30,8 +30,8 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.userId = Number(localStorage.getItem('userId'));
-    this.productId = Number(localStorage.getItem('productPageId'));
+    this.userId = Number(sessionStorage.getItem('userId'));
+    this.productId = Number(sessionStorage.getItem('productPageId'));
     if (this.productId) {
       this.getProductDetails(this.productId);
       this.fetchFeedbacks(this.productId);
@@ -59,7 +59,7 @@ export class ProductPageComponent implements OnInit {
 
   // Add item to cart
     addToCart(product: Product): void {
-      this.userId = Number(localStorage.getItem('userId'));
+      this.userId = Number(sessionStorage.getItem('userId'));
       product.cartcount = 1;
         const cartItem = {
           userId: this.userId,
@@ -83,7 +83,7 @@ export class ProductPageComponent implements OnInit {
       if (product.cartcount < product.quantity) {
         const updatedCartItem = {
           cart_Id: 0,
-          userId: Number(localStorage.getItem('userId')),
+          userId: Number(sessionStorage.getItem('userId')),
           product_Id: product.product_Id,
           Quantity: product.cartcount,
         };
@@ -104,7 +104,7 @@ export class ProductPageComponent implements OnInit {
         product.cartcount--;
         const updatedCartItem = {
           cart_Id: 0,
-          userId: Number(localStorage.getItem('userId')),
+          userId: Number(sessionStorage.getItem('userId')),
           product_Id: product.product_Id,
           Quantity: product.cartcount,
         };
@@ -124,7 +124,7 @@ export class ProductPageComponent implements OnInit {
 
     toggleWishlist(product: any): void {
       product.isfavourite = !product.isfavourite;
-      const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.isfavourite };
+      const wishItem = { Id: 0, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
   
         this.appService.AddToWishList(wishItem).subscribe({
           next: () => {
@@ -176,10 +176,10 @@ export class ProductPageComponent implements OnInit {
         Id: 0,
         rating: this.newRating,
         comments: this.newComment.trim(),
-        userId: Number(localStorage.getItem('userId')),
+        userId: Number(sessionStorage.getItem('userId')),
         product_Id: this.productId,
         DateCreated: new Date(),
-        username: localStorage.getItem('username'),
+        username: sessionStorage.getItem('username'),
       };
       if (confirm('Are you sure you want to update this feedback?')) {
         this.appService.AddOrUpdateFeedback(feedback).subscribe({

@@ -207,7 +207,7 @@ export class ProductsListComponent implements OnInit {
       error: () => {
         this.isLoading = false;
         this.router.navigate(['/login']);
-        localStorage.clear();
+        sessionStorage.clear();
       },
     });
   }
@@ -217,8 +217,8 @@ export class ProductsListComponent implements OnInit {
   }
 
   onAddNewProduct(): void {
-    localStorage.setItem('isEditMode', 'false');
-    localStorage.removeItem('editProduct');
+    sessionStorage.setItem('isEditMode', 'false');
+    sessionStorage.removeItem('editProduct');
     this.router.navigate(['/addProduct']);
   }
 
@@ -235,8 +235,8 @@ export class ProductsListComponent implements OnInit {
       imagePath: row.imagePath || '',
     };
   
-    localStorage.setItem('editProduct', JSON.stringify(updatedProduct));
-    localStorage.setItem('isEditMode', 'true');
+    sessionStorage.setItem('editProduct', JSON.stringify(updatedProduct));
+    sessionStorage.setItem('isEditMode', 'true');
     // Navigate to the Add Product component
     this.router.navigate(['/addProduct']);
   }

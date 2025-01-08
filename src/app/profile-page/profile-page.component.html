@@ -1,152 +1,311 @@
 <div *ngIf="isLoading" class="spinner-container">
-    <mat-spinner></mat-spinner>
-  </div>
-  
-  <div class="update-profile-container">
-    <h2 class="form-title">Update Profile</h2>
-    <form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)" class="profile-form">
-      <!-- Username -->
-      <div class="form-group">
-        <label class="form-label">Username</label>
-        <input
-          type="text"
-          matInput
-          name="userName"
-          [(ngModel)]="user.userName"
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="Enter username"
-        />
-      </div>
-  
-      <!-- Email -->
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input
-          type="email"
-          matInput
-          name="email"
-          [(ngModel)]="user.email"
-          required
-          class="form-control"
-          placeholder="Enter email"
-        />
-      </div>
-  
-      <!-- Phone -->
-      <div class="form-group">
-        <label class="form-label">Phone</label>
-        <input
-          type="tel"
-          matInput
-          name="phone"
-          [(ngModel)]="user.phone"
-          required
-          pattern="^[0-9]{10}$"
-          class="form-control"
-          placeholder="Enter phone number"
-        />
-      </div>
-  
-      <!-- Gender -->
-      <div class="form-group">
-        <label class="form-label">Gender</label>
-        <select
-          matInput
-          name="gender"
-          [(ngModel)]="user.gender"
-          required
-          class="form-select"
-        >
-          <option value="" disabled selected>Select gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-  
-      <!-- Date of Birth -->
-      <div class="form-group">
-        <label class="form-label">Date of Birth</label>
-        <input
-          type="date"
-          matInput
-          name="dateOfBirth"
-          [(ngModel)]="user.dateOfBirth"
-          [max]="maxDate"
-          required
-          class="form-control"
-        />
-      </div>
+  <mat-spinner></mat-spinner>
+</div>
 
-      <!-- Address -->
-      <div class="form-group">
-        <label class="form-label">Address</label>
-        <input
-          type="text"
-          matInput
-          name="address"
-          [(ngModel)]="user.address"
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="Enter address"
-        />
-      </div>
+<div class="update-profile-container">
+  <h2 class="form-title">Update Profile</h2>
 
-      <!-- Address -->
-      <div class="form-group">
-        <label class="form-label">Country</label>
-        <input
-          type="text"
-          matInput
-          name="country"
-          [(ngModel)]="user.country"
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="Enter country"
-        />
-      </div>
+  <mat-horizontal-stepper>
+    <!-- Step 1: Personal Details -->
+    <mat-step label="Personal Details">
+      <form #personalDetailsForm="ngForm">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input
+            type="text"
+            matInput
+            name="userName"
+            [(ngModel)]="user.userName"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter username"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            matInput
+            name="email"
+            [(ngModel)]="user.email"
+            required
+            class="form-control"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input
+            type="tel"
+            matInput
+            name="phone"
+            [(ngModel)]="user.phone"
+            required
+            pattern="^[0-9]{10}$"
+            class="form-control"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select
+            matInput
+            name="gender"
+            [(ngModel)]="user.gender"
+            required
+            class="form-select"
+          >
+            <option value="" disabled selected>Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            matInput
+            name="dateOfBirth"
+            [(ngModel)]="user.dateOfBirth"
+            [max]="maxDate"
+            required
+            class="form-control"
+          />
+        </div>
+        <button mat-button matStepperNext [disabled]="personalDetailsForm.invalid">Next</button>
+      </form>
+    </mat-step>
 
-      <!-- Address -->
-      <div class="form-group">
-        <label class="form-label">State</label>
-        <input
-          type="text"
-          matInput
-          name="state"
-          [(ngModel)]="user.state"
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="Enter state"
-        />
-      </div>
+    <!-- Step 2: Address Details -->
+    <mat-step label="Address Details">
+      <form #addressDetailsForm="ngForm">
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <input
+            type="text"
+            matInput
+            name="address"
+            [(ngModel)]="user.address"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter address"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country</label>
+          <input
+            type="text"
+            matInput
+            name="country"
+            [(ngModel)]="user.country"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter country"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <input
+            type="text"
+            matInput
+            name="state"
+            [(ngModel)]="user.state"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter state"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input
+            type="text"
+            matInput
+            name="city"
+            [(ngModel)]="user.city"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter city"
+          />
+        </div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="addressDetailsForm.invalid">Next</button>
+      </form>
+    </mat-step>
 
-      <!-- Address -->
-      <div class="form-group">
-        <label class="form-label">City</label>
-        <input
-          type="text"
-          matInput
-          name="city"
-          [(ngModel)]="user.city"
-          required
-          minlength="3"
-          class="form-control"
-          placeholder="Enter city"
-        />
-      </div>
-  
-      <!-- Submit Buttons -->
-      <div class="form-actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">
-          Update Profile
-        </button>
-        <button mat-button type="button" (click)="resetForm(profileForm)">Reset</button>
-      </div>
-    </form>
-  </div>
-  
+    <mat-step label="Submit">
+      <h3 class="form-title">Review and Submit</h3>
+      <p>Check your details and click submit to save changes.</p>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+
+
+
+
+<!-- Expansion panel if needed (Working can use optionally) -->
+<!-- <div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="update-profile-container">
+  <h2 class="form-title">Update Profile</h2>
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form #personalDetailsForm="ngForm">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input
+            type="text"
+            matInput
+            name="userName"
+            [(ngModel)]="user.userName"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter username"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            matInput
+            name="email"
+            [(ngModel)]="user.email"
+            required
+            class="form-control"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input
+            type="tel"
+            matInput
+            name="phone"
+            [(ngModel)]="user.phone"
+            required
+            pattern="^[0-9]{10}$"
+            class="form-control"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select
+            matInput
+            name="gender"
+            [(ngModel)]="user.gender"
+            required
+            class="form-select"
+          >
+            <option value="" disabled selected>Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            matInput
+            name="dateOfBirth"
+            [(ngModel)]="user.dateOfBirth"
+            [max]="maxDate"
+            required
+            class="form-control"
+          />
+        </div>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Address Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form #addressDetailsForm="ngForm">
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <input
+            type="text"
+            matInput
+            name="address"
+            [(ngModel)]="user.address"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter address"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country</label>
+          <input
+            type="text"
+            matInput
+            name="country"
+            [(ngModel)]="user.country"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter country"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <input
+            type="text"
+            matInput
+            name="state"
+            [(ngModel)]="user.state"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter state"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input
+            type="text"
+            matInput
+            name="city"
+            [(ngModel)]="user.city"
+            required
+            minlength="3"
+            class="form-control"
+            placeholder="Enter city"
+          />
+        </div>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Review and Submit
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <h3 class="form-title">Review and Submit</h3>
+      <p>Check your details and click submit to save changes.</p>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div> -->

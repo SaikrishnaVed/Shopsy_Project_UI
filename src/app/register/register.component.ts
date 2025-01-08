@@ -11,11 +11,13 @@ export class RegisterComponent {
   username = '';
   email = '';
   password = '';
-
+  isLinear = false;
+  DateOfBirth: '';
   registerData = {
     UserName: '',
     Email: '',
     PasswordHash: '',
+    DateOfBirth: '',
     Role: 'user'
   };
 
@@ -26,6 +28,7 @@ export class RegisterComponent {
       this.registerData.UserName = this.username;
       this.registerData.Email = this.email;
       this.registerData.PasswordHash = this.password;
+      this.registerData.DateOfBirth = this.DateOfBirth;
 
       this.appService.RegisterUser(this.registerData).subscribe({
         next: (response: any) => {

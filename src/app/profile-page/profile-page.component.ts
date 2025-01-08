@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 export class ProfilePageComponent implements OnInit {
   isLoading = false;
   maxDate: string;
-  userId = Number(localStorage.getItem('userId'));
+  userId = Number(sessionStorage.getItem('userId'));
   user = {
     Id: this.userId,
     userName: '',
@@ -53,24 +53,41 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  onSubmit(profileForm: any): void {
-    if (profileForm.valid) {
-      if (confirm('Are you sure you want to update details?')) {
-        this.isLoading = true;
-        this.appService.UpdateUserDetails(this.user).subscribe({
-          next: () => {
-            this.isLoading = false;
-            alert('User profile updated successfully.');
-          },
-          error: () => {
-            this.isLoading = false;
-          }
-        });
-      }
-    } else {
-      alert('Invalid form details. Please fill valid fields.');
-    }
+  // onSubmit(profileForm: any): void {
+  //   if (profileForm.valid) {
+  //     if (confirm('Are you sure you want to update details?')) {
+  //       this.isLoading = true;
+  //       this.appService.UpdateUserDetails(this.user).subscribe({
+  //         next: () => {
+  //           this.isLoading = false;
+  //           alert('User profile updated successfully.');
+  //         },
+  //         error: () => {
+  //           this.isLoading = false;
+  //         }
+  //       });
+  //     }
+  //   } else {
+  //     alert('Invalid form details. Please fill valid fields.');
+  //   }
+  // }
+
+  onSubmit(): void {
+  if (confirm('Are you sure you want to update details?')) {
+    this.isLoading = true;
+    this.appService.UpdateUserDetails(this.user).subscribe({
+      next: () => {
+        this.isLoading = false;
+        alert('User profile updated successfully.');
+      },
+      error: () => {
+        this.isLoading = false;
+        alert('An error occurred while updating the profile.');
+      },
+    });
   }
+}
+
 
   resetForm(profileForm: any): void {
     profileForm.resetForm();

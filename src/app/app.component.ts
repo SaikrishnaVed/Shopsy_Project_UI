@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   username: string;
   // , private cdr: ChangeDetectorRef
   constructor(private router: Router, private data: DataService) {
-    this.isAdminPage = localStorage.getItem('role') == 'admin';
+    this.isAdminPage = sessionStorage.getItem('role') == 'admin';
   }
 
   ngOnInit(): void {
@@ -30,23 +30,23 @@ export class AppComponent implements OnInit, OnDestroy {
         // Listen for role changes
         this.data.role.subscribe((role) => {
           this.isAdminPage = role === 'admin';
-          this.username = localStorage.getItem('username');
+          this.username = sessionStorage.getItem('username');
         });
       }
     });
 
     this.data.role.subscribe((role) => {
       this.isAdminPage = role === 'admin';
-      this.username = localStorage.getItem('username');
+      this.username = sessionStorage.getItem('username');
     });
 
-    this.isAdminPage = localStorage.getItem('role') == 'admin';
-    this.username = localStorage.getItem('username');
+    this.isAdminPage = sessionStorage.getItem('role') == 'admin';
+    this.username = sessionStorage.getItem('username');
   }
 
   ngAfterViewInit() {
-    // this.isAdminPage = localStorage.getItem('role') == 'admin' ? true : false;
-    this.username = localStorage.getItem('username');
+    // this.isAdminPage = sessionStorage.getItem('role') == 'admin' ? true : false;
+    this.username = sessionStorage.getItem('username');
   }
 
   ngOnDestroy() {
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onSearchTermChange(newSearchTerm: string): void {
     console.log('SearchTerm changed:', newSearchTerm);
-    localStorage.setItem('SearchTerm', newSearchTerm);
+    sessionStorage.setItem('SearchTerm', newSearchTerm);
     this.data.changeMessage(newSearchTerm);
   }
 
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     this.data.clearRole();
     this.router.navigate(['/login']);
   }

@@ -1,4 +1,4 @@
-The issue you're encountering arises because the `ngOnInit` lifecycle hook in Angular is only called once when the component is initialized, and changes to `localStorage` (e.g., the admin role) during login or other actions don't automatically trigger Angular's change detection.
+The issue you're encountering arises because the `ngOnInit` lifecycle hook in Angular is only called once when the component is initialized, and changes to `sessionStorage` (e.g., the admin role) during login or other actions don't automatically trigger Angular's change detection.
 
 To solve this issue and ensure that `isAdminPage` dynamically updates when the admin role changes, you can use one of the following approaches:
 
@@ -17,16 +17,16 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class RoleService {
-  private roleSubject = new BehaviorSubject<string>(localStorage.getItem('role') || '');
+  private roleSubject = new BehaviorSubject<string>(sessionStorage.getItem('role') || '');
   role$ = this.roleSubject.asObservable();
 
   updateRole(role: string): void {
-    localStorage.setItem('role', role);
+    sessionStorage.setItem('role', role);
     this.roleSubject.next(role);
   }
 
   clearRole(): void {
-    localStorage.removeItem('role');
+    sessionStorage.removeItem('role');
     this.roleSubject.next('');
   }
 }
@@ -46,9 +46,9 @@ onLoginSubmit(form: any): void {
       next: (response: any) => {
         if (response) {
           const payload = JSON.parse(atob(response.token.split('.')[1]));
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('userId', response?.userId);
-          localStorage.setItem('username', response?.username);
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('userId', response?.userId);
+          sessionStorage.setItem('username', response?.username);
           this.roleService.updateRole(payload.role); // Update role dynamically
           if (payload.role === 'admin') {
             this.router.navigate(['/productslist']);
@@ -62,7 +62,7 @@ onLoginSubmit(form: any): void {
         this.isLoading = false;
         alert('Invalid username or password');
         this.router.navigate(['/login']);
-        localStorage.clear();
+        sessionStorage.clear();
       },
     });
   }
@@ -87,12 +87,12 @@ ngOnInit(): void {
   // Listen for role changes
   this.roleService.role$.subscribe((role) => {
     this.isAdminPage = role === 'admin';
-    this.username = localStorage.getItem('username');
+    this.username = sessionStorage.getItem('username');
   });
 }
 
 logout(): void {
-  localStorage.clear();
+  sessionStorage.clear();
   this.roleService.clearRole(); // Reset role in service
   this.router.navigate(['/login']);
 }
@@ -117,17 +117,17 @@ ngOnInit(): void {
     }
   });
 
-  this.isAdminPage = localStorage.getItem('role') === 'admin';
-  this.username = localStorage.getItem('username');
+  this.isAdminPage = sessionStorage.getItem('role') === 'admin';
+  this.username = sessionStorage.getItem('username');
 }
 
 onRoleChange(): void {
-  this.isAdminPage = localStorage.getItem('role') === 'admin';
+  this.isAdminPage = sessionStorage.getItem('role') === 'admin';
   this.cdr.detectChanges(); // Trigger change detection
 }
 
 logout(): void {
-  localStorage.clear();
+  sessionStorage.clear();
   this.isAdminPage = false;
   this.cdr.detectChanges(); // Update the view after logout
   this.router.navigate(['/login']);
@@ -140,7 +140,7 @@ this.appService.LoginUser(this.loginData).subscribe({
   next: (response: any) => {
     if (response) {
       const payload = JSON.parse(atob(response.token.split('.')[1]));
-      localStorage.setItem('role', payload.role);
+      sessionStorage.setItem('role', payload.role);
       // Notify AppComponent
       const appComp = this.injector.get(AppComponent); // Import and inject AppComponent
       appComp.onRoleChange();

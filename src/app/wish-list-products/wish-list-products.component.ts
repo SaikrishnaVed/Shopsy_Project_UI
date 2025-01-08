@@ -86,7 +86,7 @@ userMessage: string = '';
   // Add item to cart
   addToCart(product: Product): void {
     //this.isLoading = true;
-    this.userId = Number(localStorage.getItem('userId'));
+    this.userId = Number(sessionStorage.getItem('userId'));
     product.cartcount = 1;
     // if (product.cartCount === 0) {
       const cartItem = {
@@ -118,7 +118,7 @@ userMessage: string = '';
       // product.cartCount++;
       const updatedCartItem = {
         cart_Id: 0,
-        userId: Number(localStorage.getItem('userId')),
+        userId: Number(sessionStorage.getItem('userId')),
         product_Id: product.product_Id,
         Quantity: product.cartcount,
       };
@@ -148,7 +148,7 @@ userMessage: string = '';
       // else{
       const updatedCartItem = {
         cart_Id: 0,
-        userId: Number(localStorage.getItem('userId')),
+        userId: Number(sessionStorage.getItem('userId')),
         product_Id: product.product_Id,
         Quantity: product.cartcount,
       };
@@ -192,7 +192,7 @@ userMessage: string = '';
 
   toggleWishlist(product: any): void {
     product.isfavourite = !product.isfavourite;
-    const wishItem = { Id: 0, productid: product.product_Id, userId: Number(localStorage.getItem('userId')), Isfavourite: product.isfavourite };
+    const wishItem = { Id: 0, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
 
     // if (product.Isfavourite) {
       this.appService.AddToWishList(wishItem).subscribe({
@@ -223,7 +223,7 @@ userMessage: string = '';
     this.appService.GetProductById(product_Id).subscribe({
       next: (response: any) => {
         if (response) {
-          localStorage.setItem('productPageId', product_Id.toString());
+          sessionStorage.setItem('productPageId', product_Id.toString());
           //redirect to product page component.
           this.router.navigate(['/productPage']);
         }

@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const userRole = this.getUserRoleFromToken(token);
 
     if (token && userRole === 'admin') {

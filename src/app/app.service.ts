@@ -12,22 +12,22 @@ export class AppService {
 
   // Get Products
   GetAllProducts(filter: any): Observable<any> {
-    const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    var userId = Number(localStorage.getItem('userId'));
+    var userId = Number(sessionStorage.getItem('userId'));
     return this.http.post(`https://localhost:44348/api/product/GetAll/${userId}`, filter,
       { headers });
   }
 
   // Get Products
   GetProductById(product_Id: any): Observable<any> {
-    const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    var userId = Number(localStorage.getItem('userId'));
+    var userId = Number(sessionStorage.getItem('userId'));
     return this.http.get(`https://localhost:44348/api/product/GetById/${product_Id}/${userId}`,
       { headers });
   }
@@ -43,18 +43,18 @@ export class AppService {
 
   // Get all cart items
   GetCartItems(): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    var userId = Number(localStorage.getItem('userId'));
+    var userId = Number(sessionStorage.getItem('userId'));
 
     return this.http.get(`https://localhost:44348/api/Cart/CartList?userId=${userId}`, { headers });
   }
 
   // Add an item to the cart
   AddCartItem(cartItem: any): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export class AppService {
 
   // Update an existing cart item
   UpdateCartItem(cartId: number, updatedCart: any): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export class AppService {
 
   // Delete a cart item
   DeleteCartItem(cartId: number): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -86,7 +86,7 @@ export class AppService {
 
   // Delete a cart item
   DeleteProductItem(product_Id: number): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -96,7 +96,7 @@ export class AppService {
 
     // Add an item to the cart
     AddProduct(product: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ export class AppService {
 
     // Update an item to the cart
     UpdateProduct(product: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ export class AppService {
 
     // Add an item to the cart
     AddBulkPurchaseOrders(purchaseOrders: any[]): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -130,7 +130,7 @@ export class AppService {
 
     // Add an item to the WishList
     AddToWishList(wishItem: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -140,7 +140,7 @@ export class AppService {
 
     // Get all Products Brands
     GetAllBrands(): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -148,7 +148,7 @@ export class AppService {
     }
 
     AddBrand(brand: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -158,7 +158,7 @@ export class AppService {
     
     // Get all Products Categories
     GetAllCategories(): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -166,7 +166,7 @@ export class AppService {
     }
 
     AddCategory(category: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -176,7 +176,7 @@ export class AppService {
 
     // Get all Product related Feedbacks
     GetAllFeedbacks(productId: number): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -185,7 +185,7 @@ export class AppService {
 
     // Get all Product related Feedbacks
     AddOrUpdateFeedback(feedback: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -193,7 +193,7 @@ export class AppService {
     }
 
     DeleteFeedback(feedback: any): Observable<any> {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -202,16 +202,16 @@ export class AppService {
     
     // Get Products
   GetAllAuthUsers(): Observable<any> {
-    const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    var userId = Number(localStorage.getItem('userId'));
+    var userId = Number(sessionStorage.getItem('userId'));
     return this.http.get(`https://localhost:44348/api/Auth/AuthUserList`, { headers });
   }
 
   UpdateUserRole(updatedRole: any): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -220,7 +220,7 @@ export class AppService {
 
     // Get users
     GetUserById(userId: number): Observable<any> {
-      const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+      const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -228,7 +228,7 @@ export class AppService {
     }
   
     UpdateUserDetails(updatedData: any): Observable<any> {
-      const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+      const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,
       });
@@ -237,7 +237,7 @@ export class AppService {
 
   // Get Coupons
   GetAllCoupons(): Observable<any> {
-    const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -245,7 +245,7 @@ export class AppService {
   }
 
   AddToCouponUsage(couponUsage: any): Observable<any> {
-    const token =  localStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });

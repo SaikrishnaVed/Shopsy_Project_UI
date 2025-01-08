@@ -34,10 +34,10 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.isAdmin = localStorage.getItem('role') === 'admin' ? true : false;
-    this.isEditMode = Boolean(localStorage.getItem('isEditMode'));
+    this.isAdmin = sessionStorage.getItem('role') === 'admin' ? true : false;
+    this.isEditMode = Boolean(sessionStorage.getItem('isEditMode'));
     if(this.isEditMode){
-      const productData = localStorage.getItem('editProduct');
+      const productData = sessionStorage.getItem('editProduct');
       if (productData) {
         this.product = JSON.parse(productData);
       }
@@ -90,8 +90,8 @@ export class AddProductComponent implements OnInit {
           next: () => {
             this.isLoading = false;
             alert('Product updated successfully!');
-            localStorage.removeItem('editProduct'); // Clear localStorage
-            this.router.navigate(['/products']);
+            sessionStorage.removeItem('editProduct'); // Clear sessionStorage
+            this.router.navigate(['/productslist']);
           },
           error: (err) => {
             this.isLoading = false;
@@ -105,7 +105,7 @@ export class AddProductComponent implements OnInit {
           next: () => {
             this.isLoading = false;
             alert('Product added successfully!');
-            localStorage.removeItem('editProduct'); // Clear localStorage
+            sessionStorage.removeItem('editProduct'); // Clear sessionStorage
             this.onReset(form);
           },
           error: (err) => {

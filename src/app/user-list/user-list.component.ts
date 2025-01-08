@@ -14,7 +14,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   usersList: any[] = [];
   isLoading = false;
   dataSource = new MatTableDataSource<any>([]);
-  currentRole = localStorage.getItem('role');
+  currentRole = sessionStorage.getItem('role');
   displayedColumns: string[] = [
     'userName',
     'email',
@@ -81,9 +81,9 @@ export class UserListComponent implements OnInit, AfterViewInit {
         this.appService.UpdateUserRole(updatedUser).subscribe({
           next: () => {
             this.isLoading = false;
-            if (updatedUser.userId === Number(localStorage.getItem('userId'))) {
+            if (updatedUser.userId === Number(sessionStorage.getItem('userId'))) {
               this.currentRole = updatedUser.role;
-              localStorage.setItem('role', this.currentRole);
+              sessionStorage.setItem('role', this.currentRole);
             }
 
             alert('User updated successfully!');

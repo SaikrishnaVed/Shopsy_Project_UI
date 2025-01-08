@@ -63,7 +63,7 @@ export class CartComponent implements OnInit {
       Cart_Id: item.cart_Id,
       Quantity: item.count + 1,
       product_Id: item.product_id,
-      userId: Number(localStorage.getItem('userId'))
+      userId: Number(sessionStorage.getItem('userId'))
     };
 
     this.appService.UpdateCartItem(item.cart_Id, updatedItem).subscribe({
@@ -84,7 +84,7 @@ export class CartComponent implements OnInit {
         Cart_Id: item.cart_Id,
         Quantity: item.count - 1,
         product_Id: item.product_id,
-        userId: Number(localStorage.getItem('userId'))
+        userId: Number(sessionStorage.getItem('userId'))
       };
 
       this.appService.UpdateCartItem(item.cart_Id, updatedItem).subscribe({
@@ -118,7 +118,7 @@ export class CartComponent implements OnInit {
 
   // Proceed to checkout
   checkout(): void {
-    const userId = Number(localStorage.getItem('userId'));
+    const userId = Number(sessionStorage.getItem('userId'));
 
     if (!userId || !this.cartItems || this.cartItems.length === 0) {
       alert('No items in the cart to checkout.');

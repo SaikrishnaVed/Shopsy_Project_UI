@@ -16,8 +16,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.isLoading = true;
-    if(localStorage.getItem('token') != undefined){
-      if(localStorage.getItem('role') == "admin")
+    if(sessionStorage.getItem('token') != undefined){
+      if(sessionStorage.getItem('role') == "admin")
         this.router.navigate(['/products']);
       else
       this.router.navigate(['/allproducts']);
@@ -38,12 +38,12 @@ export class LoginComponent {
             console.log(response?.token);
             console.log(response?.role);
             console.log(response?.userId);
-            localStorage.setItem('token', response.token);
+            sessionStorage.setItem('token', response.token);
             const payload = JSON.parse(atob(response.token.split('.')[1]));
-            localStorage.setItem('role', payload.role);
-            localStorage.setItem('userId', response?.userId);
-            localStorage.setItem('username', response?.username);
-            // localStorage.setItem('role', response.role);
+            sessionStorage.setItem('role', payload.role);
+            sessionStorage.setItem('userId', response?.userId);
+            sessionStorage.setItem('username', response?.username);
+            // sessionStorage.setItem('role', response.role);
             if(payload.role === 'admin'){
               // this.router.navigate(['/products']);
               this.router.navigate(['/productslist']);
@@ -58,7 +58,7 @@ export class LoginComponent {
           // console.error('Error fetching product list:', err);
           alert('Invalid username or password');
           this.router.navigate(['/login']);
-          localStorage.clear();
+          sessionStorage.clear();
         },
       });
     }

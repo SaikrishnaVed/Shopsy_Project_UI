@@ -3,9 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
-
-
-// Import the component
 import { ProductsListComponent } from './products-list/products-list.component';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,6 +35,8 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DateFormatPipe } from './date-format.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProductPreviewDialogComponent } from './product-preview-dialog/product-preview-dialog.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -78,8 +77,9 @@ import { ProductPreviewDialogComponent } from './product-preview-dialog/product-
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSelectModule,
-    MatDialogModule
-    // MatSnackBar
+    MatDialogModule,
+    MatStepperModule,
+    MatExpansionModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

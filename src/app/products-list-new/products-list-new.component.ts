@@ -109,7 +109,7 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       error: () => {
         this.isLoading = false;
         this.router.navigate(['/login']);
-        localStorage.clear();
+        sessionStorage.clear();
       },
     });
   }
@@ -133,9 +133,9 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       case 'xlsx':
         this.downloadXLSX();
         break;
-      // case 'word':
-      //   this.downloadWord();
-      //   break;
+      case 'word':
+        this.downloadWord();
+        break;
       default:
         alert('Unsupported file format');
         break;
@@ -236,8 +236,8 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   // }
 
   onAddNewProduct(): void {
-    localStorage.setItem('isEditMode', 'false');
-    localStorage.removeItem('editProduct');
+    sessionStorage.setItem('isEditMode', 'false');
+    sessionStorage.removeItem('editProduct');
     this.router.navigate(['/addProduct']);
   }
 
@@ -254,8 +254,8 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       imagePath: row.imagePath || '',
     };
   
-    localStorage.setItem('editProduct', JSON.stringify(updatedProduct));
-    localStorage.setItem('isEditMode', 'true');
+    sessionStorage.setItem('editProduct', JSON.stringify(updatedProduct));
+    sessionStorage.setItem('isEditMode', 'true');
     // Navigate to the Add Product component
     this.router.navigate(['/addProduct']);
   }
@@ -275,8 +275,4 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       alert(`Product ${row.product_Name} deleted successfully.`);
     }
   }
-}
-
-function saveAs(blob: Blob, arg1: string) {
-  throw new Error('Function not implemented.');
 }

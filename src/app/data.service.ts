@@ -11,16 +11,16 @@ export class DataService {
   private messageSource = new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
 
-  private roleSubject = new BehaviorSubject<string>(localStorage.getItem('role') || '');
+  private roleSubject = new BehaviorSubject<string>(sessionStorage.getItem('role') || '');
   role = this.roleSubject.asObservable();
 
   updateRole(role: string): void {
-    localStorage.setItem('role', role);
+    sessionStorage.setItem('role', role);
     this.roleSubject.next(role);
   }
 
   clearRole(): void {
-    localStorage.removeItem('role');
+    sessionStorage.removeItem('role');
     this.roleSubject.next('');
   }
 

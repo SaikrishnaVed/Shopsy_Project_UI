@@ -64,3 +64,12 @@
   .backBtn{
     float: right;
   }
+
+  .mat-expansion-panel {
+    background: #ccc6c6;
+    color: #000000;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: #000000;
+  }
