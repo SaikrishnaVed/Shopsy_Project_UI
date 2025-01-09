@@ -13,17 +13,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px; /* Space between the image and the form */
+  margin-bottom: 5px;
 }
 
 .image-container img {
-  max-width: 300px !important; /* Adjust the image size */
+  max-width: 300px !important;
   max-height: 200px !important;
 }
 
 .login-card {
   width: 100%;
-  max-width: 400px; /* Limit the card width */
+  max-width: 400px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

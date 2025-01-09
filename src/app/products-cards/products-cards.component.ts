@@ -15,6 +15,14 @@ export class ProductsCardsComponent implements OnInit {
   messages: string[] = [];
   filteredProductList: Product[] = [];
   selectedPriceRanges: string[] = [];
+  slideshowImages: string[] = [
+    'assets/megasale.jpg',
+    'assets/familyshopping.jpg',
+    // 'assets/blackfriday.jpg',
+    'assets/feedback.jpg',
+  ];
+  currentSlideIndex: number = 0;
+  slideshowInterval: any;
   constructor(private appService: AppService, private router: Router, private dataService: DataService) { }
 
   productList: Product[] = [];
@@ -32,6 +40,8 @@ export class ProductsCardsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.startSlideshow();
+
     this.isLoading = true;
     this.subscription = this.dataService.currentMessage.subscribe(
       (message: string) => {
@@ -44,6 +54,12 @@ export class ProductsCardsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  startSlideshow(): void {
+    this.slideshowInterval = setInterval(() => {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slideshowImages.length;
+    }, 2000);
   }
 
   togglePriceRange(range: string): void {

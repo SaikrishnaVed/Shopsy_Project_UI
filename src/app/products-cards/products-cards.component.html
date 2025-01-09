@@ -24,7 +24,11 @@
   </div>
 </div>
 
-
+<div class="slideshow-container">
+  <div *ngFor="let image of slideshowImages; let i = index" [class.active]="i === currentSlideIndex" class="slide">
+    <img [src]="image" alt="Offer Image" class="slideshow-image" />
+  </div>
+</div>
 
 <div *ngIf="!isLoading" class="product-grid">
   <div class="product-card" (dblclick)="productPage(item.product_Id)" *ngFor="let item of filteredProductList">
