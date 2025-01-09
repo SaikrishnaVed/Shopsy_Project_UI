@@ -2,7 +2,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="cart-container">
+<div *ngIf="!isLoading" class="cart-container">
   <h2>Your Cart</h2>
 
   <div *ngIf="cartItems?.length === 0" class="empty-cart">

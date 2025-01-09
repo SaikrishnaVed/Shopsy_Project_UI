@@ -55,6 +55,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
         if (response) {
           this.usersList = response;
           this.dataSource.data = response;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       },
       error: () => {

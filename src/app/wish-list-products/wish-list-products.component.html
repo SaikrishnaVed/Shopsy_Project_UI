@@ -1,38 +1,38 @@
 <div *ngIf="isLoading" class="spinner-container">
     <mat-spinner></mat-spinner>
-  </div>
+</div>
   
-  <div class="product-grid">
-    <div class="product-card" (dblclick)="productPage(product.product_Id)" *ngFor="let product of productList">
-      <img [src]="product.imagePath" [alt]="product.product_Name" class="product-image" />
-      <div class="product-details">
-        <h3 class="product-name">{{ product.product_Name }}</h3>
-        <p class="product-price">Price: ₹ {{ product.list_Price }}</p>
-        <p class="product-quantity">Stock: {{ product.quantity }}</p>
-        <p class="product-color">Color: {{ product.color }}</p>
-        <p class="product-year">Model Year: {{ product.model_Year }}</p>
-      </div>
-  
-      <!-- Wishlist Love Icon -->
-      <button mat-icon-button (click)="toggleWishlist(product)">
-        <mat-icon [color]="product.isfavourite ? 'warn' : ''">
-          {{ product.isfavourite ? 'favorite' : 'favorite_border' }}
-        </mat-icon>
+<div *ngIf="!isLoading" class="product-grid">
+  <div class="product-card" (dblclick)="productPage(product.product_Id)" *ngFor="let product of productList">
+    <img [src]="product.imagePath" [alt]="product.product_Name" class="product-image" />
+    <div class="product-details">
+      <h3 class="product-name">{{ product.product_Name }}</h3>
+      <p class="product-price">Price: ₹ {{ product.list_Price }}</p>
+      <p class="product-quantity">Stock: {{ product.quantity }}</p>
+      <p class="product-color">Color: {{ product.color }}</p>
+      <p class="product-year">Model Year: {{ product.model_Year }}</p>
+    </div>
+
+    <!-- Wishlist Love Icon -->
+    <button mat-icon-button (click)="toggleWishlist(product)">
+      <mat-icon [color]="product.isfavourite ? 'warn' : ''">
+        {{ product.isfavourite ? 'favorite' : 'favorite_border' }}
+      </mat-icon>
+    </button>
+
+    <!-- Add to Cart Button -->
+    <div *ngIf="product.cartcount === 0">
+      <button mat-raised-button color="primary" class="add-to-cart-button" (click)="addToCart(product)">
+        Add to Cart
       </button>
-  
-      <!-- Add to Cart Button -->
-      <div *ngIf="product.cartcount === 0">
-        <button mat-raised-button color="primary" class="add-to-cart-button" (click)="addToCart(product)">
-          Add to Cart
-        </button>
-      </div>
-  
-      <!-- Cart Controls (Increment/Decrement) -->
-      <div *ngIf="product.cartcount > 0" class="cart-controls">
-        <button mat-button (click)="decrementCount(product)">-</button>
-        <span>{{ product.cartcount }}</span>
-        <button mat-button (click)="incrementCount(product)">+</button>
-      </div>
+    </div>
+
+    <!-- Cart Controls (Increment/Decrement) -->
+    <div *ngIf="product.cartcount > 0" class="cart-controls">
+      <button mat-button (click)="decrementCount(product)">-</button>
+      <span>{{ product.cartcount }}</span>
+      <button mat-button (click)="incrementCount(product)">+</button>
     </div>
   </div>
+</div>
   
