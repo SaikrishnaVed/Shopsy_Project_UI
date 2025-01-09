@@ -17,9 +17,12 @@ export class ProductsCardsComponent implements OnInit {
   selectedPriceRanges: string[] = [];
   slideshowImages: string[] = [
     'assets/megasale.jpg',
-    'assets/familyshopping.jpg',
-    // 'assets/blackfriday.jpg',
-    'assets/feedback.jpg',
+    'assets/familyshopping2.jpg',
+    'assets/blackfriday2.jpg',
+    'assets/card.jpg',
+    'assets/brands.jpg',
+    'assets/allshopping.jpg',
+    // 'assets/feedback.jpg',
   ];
   currentSlideIndex: number = 0;
   slideshowInterval: any;

@@ -34,8 +34,8 @@ export class LoginComponent {
       this.appService.LoginUser(this.loginData).subscribe({
         next: (response: any) => {
           if(response){
-            const computerName = response.headers.get('X-Computer-Name');
-            console.log('Computer Name from Header:', computerName);
+            // const computerName = response.headers.get('X-Computer-Name');
+            // console.log('Computer Name from Header:', computerName);
             this.data.updateRole(response?.role);
             sessionStorage.setItem('token', response.token);
             const payload = JSON.parse(atob(response.token.split('.')[1]));
