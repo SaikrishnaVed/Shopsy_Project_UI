@@ -23,6 +23,9 @@
     </div>
   </div>
 </div>
+
+
+
 <div *ngIf="!isLoading" class="product-grid">
   <div class="product-card" (dblclick)="productPage(item.product_Id)" *ngFor="let item of filteredProductList">
     <img [src]="item.imagePath" [alt]="item.product_name" class="product-image" />

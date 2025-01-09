@@ -56,7 +56,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onSearchTermChange(newSearchTerm: string): void {
-    console.log('SearchTerm changed:', newSearchTerm);
     sessionStorage.setItem('SearchTerm', newSearchTerm);
     this.data.changeMessage(newSearchTerm);
   }

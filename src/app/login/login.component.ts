@@ -34,10 +34,9 @@ export class LoginComponent {
       this.appService.LoginUser(this.loginData).subscribe({
         next: (response: any) => {
           if(response){
+            const computerName = response.headers.get('X-Computer-Name');
+            console.log('Computer Name from Header:', computerName);
             this.data.updateRole(response?.role);
-            console.log(response?.token);
-            console.log(response?.role);
-            console.log(response?.userId);
             sessionStorage.setItem('token', response.token);
             const payload = JSON.parse(atob(response.token.split('.')[1]));
             sessionStorage.setItem('role', payload.role);
@@ -59,6 +58,28 @@ export class LoginComponent {
         },
       });
     }
+  }
+
+  getOS(): void {
+    let userAgent = window.navigator.userAgent.toLowerCase(),
+      macosPlatforms = /(macintosh|macintel|macppc|mac68k|macos)/i,
+      windowsPlatforms = /(win32|win64|windows|wince)/i,
+      iosPlatforms = /(iphone|ipad|ipod)/i,
+      os = null;``
+  
+    if (macosPlatforms.test(userAgent)) {
+      os = "macos";
+    } else if (iosPlatforms.test(userAgent)) {
+      os = "ios";
+    } else if (windowsPlatforms.test(userAgent)) {
+      os = "windows";
+    } else if (/android/.test(userAgent)) {
+      os = "android";
+    } else if (!os && /linux/.test(userAgent)) {
+      os = "linux";
+    }
+  
+    return os;
   }
 
   navigateToForgotPassword(): void {

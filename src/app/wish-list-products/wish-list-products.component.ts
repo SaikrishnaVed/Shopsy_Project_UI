@@ -53,8 +53,6 @@ userMessage: string = '';
           this.productList = response.items.map((product: Product) => ({
             ...product,
           }));
-          console.log('++++ ' + this.productList);
-          console.log(response.items);
           
         } else {
           console.error('No items in response');

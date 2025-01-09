@@ -123,8 +123,6 @@ export class AppService {
         Authorization: `Bearer ${token}`,
       });
 
-      console.log(JSON.stringify(purchaseOrders));
-
       return this.http.post(`https://localhost:44348/api/PurchaseOrder/AddPurchaseOrders`, purchaseOrders, { headers });
     }
 
