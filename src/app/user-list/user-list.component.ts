@@ -103,6 +103,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
           },
         });
       }
+      else
+        this.isLoading = false;
     }
   }
 

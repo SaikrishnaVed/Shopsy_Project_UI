@@ -25,8 +25,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Check if the current route is the login page
-        this.isLoginPage = (this.router.url === '/login') || (this.router.url === '/register');
-        
+        // this.isLoginPage = (this.router.url === '/login') || (this.router.url === '/register') || (this.router.url === '/forgot-password')|| (this.router.url === '/reset-password') ;
+        this.isLoginPage = ['/login', '/register', '/forgot-password', '/reset-password']
+        .some(route => this.router.url.includes(route));
+
         // Listen for role changes
         this.data.role.subscribe((role) => {
           this.isAdminPage = role === 'admin';

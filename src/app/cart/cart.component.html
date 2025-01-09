@@ -27,24 +27,29 @@
     </div>
   </div>
 
-  <!-- Coupon Section -->
   <div class="coupon-section" *ngIf="!isCheckOut">
     <h3>Apply a Coupon</h3>
     <div *ngIf="!appliedCoupon">
       <input type="text" [(ngModel)]="couponCode" placeholder="Enter coupon code" />
-      <button class="apply-coupon-button" (click)="applyCoupon()">Apply Coupon</button>
-    
-      <p style="margin-top: 7px; color: blue;"> Available Coupons </p>
+      <button
+        class="apply-coupon-button coupon-applied"
+        (click)="applyCoupon()"
+      >
+        Apply Coupon
+      </button>
+  
+      <p style="margin-top: 7px; color: blue;">Available Coupons</p>
       <div *ngFor="let coupon of validCoupons">
-          <span class="availableCoupons">{{coupon.code}}</span>
+        <span class="availableCoupons">{{ coupon.code }}</span>
       </div>
     </div>
-    
+  
     <div *ngIf="appliedCoupon && !isCheckOut" class="applied-coupon">
       <p>Applied Coupon: {{ appliedCoupon.code }}</p>
       <button class="remove-coupon-button" (click)="removeCoupon()">Remove Coupon</button>
     </div>
   </div>
+  
 
   <!-- Checkout Section -->
   <div *ngIf="cartItems?.length > 0" class="checkout-section">

@@ -12,6 +12,8 @@ import { ProductsListNewComponent } from './products-list-new/products-list-new.
 import { WishListProductsComponent } from './wish-list-products/wish-list-products.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'wishlistitems', component: WishListProductsComponent },
   { path: 'userslist', component: UserListComponent, canActivate: [AuthGuard]},
   { path: 'profilepage', component: ProfilePageComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({

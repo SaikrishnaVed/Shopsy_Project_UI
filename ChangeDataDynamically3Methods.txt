@@ -169,3 +169,27 @@ This approach is less clean and should be avoided unless necessary.
 
 ### **Preferred Solution**
 The **BehaviorSubject** approach is the most robust and scalable. It ensures that your app remains reactive and clean, with minimal manual intervention for change detection.
+
+
+
+-----------------------css styling----------------------------
+
+::ng-deep: Used to deeply style nested child components, bypassing view encapsulation.
+
+::ng-deep .child-component-class { 
+   color: red; 
+   }
+:host: Targets and styles the host element of a component.
+
+/* Component's CSS */
+:host {
+  display: block;
+  border: 1px solid black;
+  }
+:host-context(): Styles based on a condition in the ancestor elements of the component, useful for theming or contextual styles.
+
+/* Component's CSS */ 
+:host-context(.theme-dark) .element { 
+  background-color: black;
+   color: white; 
+}

@@ -187,7 +187,7 @@ export class ProductsCardsComponent implements OnInit {
 
   toggleWishlist(product: any): void {
     product.isfavourite = !product.isfavourite;
-    const wishItem = { Id: 0, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
+    const wishItem = { Id: -1, productid: product.product_Id, userId: Number(sessionStorage.getItem('userId')), Isfavourite: product.isfavourite };
       this.appService.AddToWishList(wishItem).subscribe({
         next: () => {
           this.productList.forEach((p) => {

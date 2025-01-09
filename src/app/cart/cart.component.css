@@ -169,3 +169,29 @@
     font-size: 16px;
   }
   
+  
+
+  @keyframes couponAnimation {
+    0% {
+      transform: scale(1);
+      background-color: #007bff;
+      color: white;
+    }
+    50% {
+      transform: scale(1.1);
+      background-color: #28a745;
+      color: white;
+    }
+    100% {
+      transform: scale(1);
+      background-color: #007bff;
+      color: white;
+    }
+  }
+  
+  .coupon-applied {
+    animation: couponAnimation 0.8s ease-in-out;
+    border: 2px solid #28a745;
+    border-radius: 4px;
+  }
+  

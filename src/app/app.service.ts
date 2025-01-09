@@ -251,4 +251,12 @@ export class AppService {
     });
     return this.http.post(`https://localhost:44348/api/Coupons/AddToCouponUsage`, couponUsage, { headers });
   }
+
+  forgotPassword(forgotPasswordRequest: any): Observable<any> {
+    return this.http.post(`https://localhost:44348/api/Auth/ForgotPassword`, forgotPasswordRequest);
+  }
+
+  ResetPassword(ResetPasswordRequest: any): Observable<any> {
+    return this.http.post(`https://localhost:44348/api/Auth/ResetPassword`, ResetPasswordRequest);
+  }
 }

@@ -11,8 +11,8 @@ export class CartComponent implements OnInit {
   totalAmount: number = 0;
   discountedAmount: number = 0;
   isLoading = false;
-  // appliedCoupons: Coupon[] = [];
-  isCheckOut = false;
+  isCheckOut: boolean = false;
+  isCouponApplied: boolean = false;
   appliedCoupon: Coupon | null = null;
   availableCoupons: Coupon[] = [];
   validCoupons: Coupon[] = [];
@@ -183,18 +183,52 @@ export class CartComponent implements OnInit {
   }
 
   // Apply the coupon entered by the user
-  applyCoupon(): void {
-    const coupon = this.availableCoupons.find(c => c.code === this.couponCode.trim());
+  // applyCoupon(): void {
+  //   const coupon = this.availableCoupons.find(c => c.code === this.couponCode.trim());
     
+  //   if (coupon) {
+  //     const currentDate = new Date();
+  //     const startDate = new Date(coupon.start_date);
+  //     const endDate = new Date(coupon.end_date);
+
+  //     if (currentDate >= startDate && currentDate <= endDate && coupon.status === 'active') {
+  //       this.appliedCoupon = coupon; // Set the applied coupon
+  //       this.couponCode = ''; // Clear the input
+  //       this.calculateTotalAmount(); // Recalculate total with the coupon applied
+  //       alert(`Coupon ${coupon.code} applied successfully!`);
+  //     } else {
+  //       alert('This coupon is not valid or expired.');
+  //     }
+  //   } else {
+  //     alert('Invalid coupon code.');
+  //   }
+  // }
+
+  applyCoupon(): void {
+    const coupon = this.availableCoupons.find(
+      (c) => c.code === this.couponCode.trim()
+    );
+
     if (coupon) {
       const currentDate = new Date();
       const startDate = new Date(coupon.start_date);
       const endDate = new Date(coupon.end_date);
 
-      if (currentDate >= startDate && currentDate <= endDate && coupon.status === 'active') {
+      if (
+        currentDate >= startDate &&
+        currentDate <= endDate &&
+        coupon.status === 'active'
+      ) {
         this.appliedCoupon = coupon; // Set the applied coupon
         this.couponCode = ''; // Clear the input
         this.calculateTotalAmount(); // Recalculate total with the coupon applied
+
+        // Trigger animation
+        this.isCouponApplied = true;
+        setTimeout(() => {
+          this.isCouponApplied = false; // Reset animation class
+        }, 1000);
+
         alert(`Coupon ${coupon.code} applied successfully!`);
       } else {
         alert('This coupon is not valid or expired.');
