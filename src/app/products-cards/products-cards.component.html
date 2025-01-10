@@ -1,6 +1,11 @@
-<div *ngIf="isLoading" class="spinner-container">
-  <mat-spinner></mat-spinner>
+<app-loader></app-loader>
+
+<div class="slideshow-container">
+  <div *ngFor="let image of slideshowImages; let i = index" [class.active]="i === currentSlideIndex" class="slide">
+    <img [src]="image" alt="Offer Image" class="slideshow-image" />
+  </div>
 </div>
+
 <div *ngIf="!isLoading" class="filter-container">
   <div class="dropdown">
     <button class="filter-btn"> <i class="fas fa-filter"></i> Price Range</button>
@@ -21,12 +26,6 @@
         <input type="checkbox" (change)="togglePriceRange('5000-10000')" /> ₹5000 - ₹10000
       </label>
     </div>
-  </div>
-</div>
-
-<div class="slideshow-container">
-  <div *ngFor="let image of slideshowImages; let i = index" [class.active]="i === currentSlideIndex" class="slide">
-    <img [src]="image" alt="Offer Image" class="slideshow-image" />
   </div>
 </div>
 

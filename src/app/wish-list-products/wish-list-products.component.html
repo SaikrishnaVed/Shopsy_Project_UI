@@ -1,6 +1,4 @@
-<div *ngIf="isLoading" class="spinner-container">
-    <mat-spinner></mat-spinner>
-</div>
+<app-loader></app-loader>
   
 <div *ngIf="!isLoading" class="product-grid">
   <div class="product-card" (dblclick)="productPage(product.product_Id)" *ngFor="let product of productList">

@@ -40,6 +40,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ProductPreviewDialogComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    LoaderComponent,
   ],
   imports: [
     FormsModule,

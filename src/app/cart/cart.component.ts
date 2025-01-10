@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -27,7 +28,7 @@ export class CartComponent implements OnInit {
     DateCreated: new Date()
   };
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -56,7 +57,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  
   // Increment item quantity
   incrementItem(item: CartItem): void {
     const updatedItem = {
@@ -168,6 +168,22 @@ export class CartComponent implements OnInit {
   }
   }
 
+  productPage(product_Id: number): void {
+    this.appService.GetProductById(product_Id).subscribe({
+      next: (response: any) => {
+        if (response) {
+          sessionStorage.setItem('productPageId', product_Id.toString());
+          this.router.navigate(['/productPage']);
+        }
+        else{
+          alert('No data found.');
+        }
+      },
+      error: (err) => {
+        console.error('Error while product details:', err);
+      },
+    });
+  }
 
   // Fetch available coupons
   loadCoupons(): void {

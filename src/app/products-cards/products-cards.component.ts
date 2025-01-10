@@ -42,7 +42,7 @@ export class ProductsCardsComponent implements OnInit {
   userId: number;
 
   ngOnInit(): void {
-
+    // Slide show
     this.startSlideshow();
 
     this.isLoading = true;

@@ -6,12 +6,12 @@ body {
 }
 
 table {
-  width: 85%;
+  width: 60%;
   margin: auto;
 }
 
 mat-paginator{
-  width: 85% !important;
+  width: 60% !important;
   margin: auto;
 }
 
@@ -52,4 +52,17 @@ th {
 
 .mat-select {
   background-color: rgb(176, 214, 127) !important;
+}
+
+.btn-act {
+  /* margin-left: 55px; */
+  margin-right: 15px !important;
+}
+
+::ng-deep th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-right: 0px;
+}
+
+::ng-deep th.mat-header-cell, td, th {
+  text-align: center !important;
 }

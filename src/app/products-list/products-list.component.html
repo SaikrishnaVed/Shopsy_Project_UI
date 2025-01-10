@@ -1,6 +1,4 @@
-<div *ngIf="isLoading" class="spinner-container">
-    <mat-spinner></mat-spinner>
-</div>
+<app-loader></app-loader>
 
 <div *ngIf="!isLoading">
     <button mat-raised-button color="primary" class="add-new-product-button" (click)="onAddNewProduct()">

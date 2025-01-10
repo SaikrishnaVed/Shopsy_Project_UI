@@ -18,6 +18,7 @@ import * as docxtemplater from 'docxtemplater';
 import { MatDialog } from '@angular/material/dialog';
 import autoTable from 'jspdf-autotable';
 import { ProductPreviewDialogComponent } from '../product-preview-dialog/product-preview-dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-products-list-new',
@@ -56,7 +57,8 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
       private appService: AppService,
       private router: Router,
       private dataService: DataService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private sanitise: DomSanitizer
     ) {}
 
   ngOnInit(): void {

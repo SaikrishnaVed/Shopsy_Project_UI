@@ -1,6 +1,4 @@
-<div *ngIf="isLoading" class="spinner-container">
-  <mat-spinner></mat-spinner>
-</div>
+<app-loader></app-loader>
 
 <div *ngIf="!isLoading" class="cart-container">
   <h2>Your Cart</h2>
@@ -11,7 +9,7 @@
 
   <div *ngFor="let item of cartItems" class="cart-item">
     <div class="cart-item-image">
-      <img [src]="item.imagePath" alt="{{ item.product_name }}" />
+      <img [src]="item.imagePath" (dblclick)="productPage(item.product_id)" alt="{{ item.product_name }}" />
     </div>
     <div class="cart-item-details">
       <h3>{{ item.product_name }}</h3>
