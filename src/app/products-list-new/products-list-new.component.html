@@ -1,4 +1,6 @@
-<app-loader></app-loader>
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
 
 <div *ngIf="!isLoading">
   <div class="button-container">

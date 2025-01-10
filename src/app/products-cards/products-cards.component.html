@@ -1,4 +1,6 @@
-<app-loader></app-loader>
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
 
 <div class="slideshow-container">
   <div *ngFor="let image of slideshowImages; let i = index" [class.active]="i === currentSlideIndex" class="slide">

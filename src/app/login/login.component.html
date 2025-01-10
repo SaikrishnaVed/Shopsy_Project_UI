@@ -1,6 +1,8 @@
-<app-loader></app-loader>
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
 
-<div *ngIf="!isLoading" class="login-container">
+<div *ngIf="!isLoading && !isForgotPwd && !isResetPassword" class="login-container">
   <div class="image-container">
     <img src="assets/shoppingBag.png" alt="Shopping Bag Logo" />
   </div>
@@ -53,4 +55,73 @@
           </div>
         </mat-card-content>
       </mat-card>
+</div>
+
+<div *ngIf="!isLoading && isForgotPwd && !isResetPassword" class="forgot-password-container">
+  <mat-card class="forgot-password-card">
+    <mat-card-header>
+      <mat-card-title>Forgot Password</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            class="email-input"
+          />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="submit-button">
+          Submit
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div> 
+
+<div class="reset-password-container" *ngIf="!isLoading && isResetPassword">
+  <mat-card class="reset-password-card">
+    <mat-card-header>
+      <mat-card-title>Reset Password</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #resetForm="ngForm" (ngSubmit)="onResetPassword(resetForm)">
+        <mat-form-field class="full-width">
+          <mat-label>New Password</mat-label>
+          <input
+            matInput
+            type="password"
+            name="newPassword"
+            [(ngModel)]="newPassword"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            type="password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+          />
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!resetForm.valid || newPassword !== confirmPassword"
+          class="submit-button"
+        >
+          Reset Password
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

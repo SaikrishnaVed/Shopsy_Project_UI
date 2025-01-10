@@ -77,3 +77,7 @@
 ::ng-deep .mat-step-header .mat-step-icon {
   background-color: #7b1fa2;
 }
+
+.arr {
+  display: flex;
+}

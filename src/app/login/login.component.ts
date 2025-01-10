@@ -12,6 +12,13 @@ import { DataService } from '../data.service';
 export class LoginComponent {
   loginData = { UserName: '', Password: '' };
   isLoading = false;
+  email = '';
+  isForgotPwd = false;
+  isResetPassword = false;
+  newPassword = '';
+  confirmPassword = '';
+  token: string | null = null;
+
   constructor(private http: HttpClient, private router: Router, private appService: AppService, private data: DataService) {}
 
   ngOnInit(): void {
@@ -60,6 +67,51 @@ export class LoginComponent {
     }
   }
 
+  onSubmit(): void {
+    if (this.email) {
+      this.isLoading = true;
+      const ForgotPasswordRequest = {
+        Email: this.email
+      }
+      this.appService.forgotPassword(ForgotPasswordRequest).subscribe({
+        next: () => {
+          this.isLoading = false;
+          alert('Password reset email has been sent.');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          alert('Failed to send password reset email. Please try again.');
+          console.error(err);
+        },
+        complete: () => { 
+          this.isLoading = false;
+        },
+      });
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  }
+
+  onResetPassword(form: any): void {
+    if (form.valid && this.token) {
+      const ResetPassword = {
+        token: this.token,
+        newPassword: this.newPassword, 
+      }
+      this.appService.ResetPassword(ResetPassword)
+      .subscribe({
+        next: () => {
+          alert('Password reset successful! Please log in with your new password.');
+          this.router.navigate(['/login']);
+        },
+        error: () => {
+          alert('Failed to reset password. Please try again.');
+        },
+      });
+    }
+  }
+
   getOS(): void {
     let userAgent = window.navigator.userAgent.toLowerCase(),
       macosPlatforms = /(macintosh|macintel|macppc|mac68k|macos)/i,
@@ -83,6 +135,7 @@ export class LoginComponent {
   }
 
   navigateToForgotPassword(): void {
-    this.router.navigate(['/forgot-password']);
+    this.isForgotPwd = true;
+    // this.router.navigate(['/forgot-password']);
   }
 }
