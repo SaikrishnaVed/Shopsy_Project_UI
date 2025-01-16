@@ -44,15 +44,15 @@ export class ProductsCardsComponent implements OnInit {
 
   ngOnInit(): void {
     // Slide show
-    this.startSlideshow();
-
     this.isLoading = true;
+    
     this.subscription = this.dataService.currentMessage.subscribe(
       (message: string) => {
         this.filter.SearchTerm = message;
         this.GetProductList();
       }
     );
+    this.startSlideshow();
     this.isLoading = false;
   }
 

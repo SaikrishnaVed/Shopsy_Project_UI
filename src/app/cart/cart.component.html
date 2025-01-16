@@ -21,7 +21,8 @@
         <button class="quantity-button" (click)="incrementItem(item)">+</button>
       </div>
       <p class="cart-item-total">Total: ₹{{ (item.list_price * item.count) | decimalFormat }}</p>
-      <button class="remove-button" (click)="removeItem(item)">Remove</button>
+      <!-- <p>Coupon Applied: {{ appliedCoupon.code }}</p> -->
+      <button class="remove-coupon-button" (click)="removeItem(item)">Delete</button>
     </div>
   </div>
 
