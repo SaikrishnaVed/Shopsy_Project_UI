@@ -18,6 +18,7 @@ export class CartComponent implements OnInit {
   availableCoupons: Coupon[] = [];
   validCoupons: Coupon[] = [];
   couponCode: string = '';
+  userId = Number(sessionStorage.getItem('userId'));
   
   PurchaseOrder = {
     Id: 0,
@@ -104,16 +105,16 @@ export class CartComponent implements OnInit {
   // Remove an item from the cart
   removeItem(item: CartItem): void {
     if (confirm('Are you sure you want to delete items?')) {
-    this.appService.DeleteCartItem(item.cart_Id).subscribe({
-      next: () => {
-        this.cartItems = this.cartItems.filter((cartItem) => cartItem.cart_Id !== item.cart_Id);
-        this.calculateTotalAmount();
-      },
-      error: (err) => {
-        console.error('Error removing cart item:', err);
-      },
-    });
-  }
+      this.appService.DeleteCartItem(item.cart_Id).subscribe({
+        next: () => {
+          this.cartItems = this.cartItems.filter((cartItem) => cartItem.cart_Id !== item.cart_Id);
+          this.calculateTotalAmount();
+        },
+        error: (err) => {
+          console.error('Error removing cart item:', err);
+        },
+      });
+    }
   }
 
   // Proceed to checkout
@@ -151,7 +152,8 @@ export class CartComponent implements OnInit {
     const couponUsage = {
       Id: 0,
       Coupon_Id: this.appliedCoupon.id,
-      Order_Id: 0,
+      couponLimit: this.appliedCoupon.usage_limit,
+      couponUsed: this.appliedCoupon.couponUsed === 0 ? 1 : this.appliedCoupon.couponUsed,
       user_Id: userId,
       Usage_Date: new Date(),
     };
@@ -187,7 +189,7 @@ export class CartComponent implements OnInit {
 
   // Fetch available coupons
   loadCoupons(): void {
-    this.appService.GetAllCoupons().subscribe({
+    this.appService.GetAllCoupons(this.userId).subscribe({
       next: (response: any) => {
         this.availableCoupons = response;
         this.applyValidCoupons();
@@ -325,4 +327,5 @@ export class Coupon {
   end_date: string;
   usage_limit: number;
   status: string;
+  couponUsed: number;
 }

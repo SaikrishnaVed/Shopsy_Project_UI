@@ -32,7 +32,7 @@
 </div>
 
 <div *ngIf="!isLoading" class="product-grid">
-  <div class="product-card" (dblclick)="productPage(item.product_Id)" *ngFor="let item of filteredProductList">
+  <div class="product-card" (dblclick)="productPage(item.product_Id)" *ngFor="let item of filteredProductList trackBy:trackByProductID">
     <img [src]="item.imagePath" [alt]="item.product_name" class="product-image" />
     <div class="product-details">
       <h3 class="product-name">{{ item.product_Name }}</h3>

@@ -76,3 +76,17 @@
  ::ng-deep placeholder{
     color: #ccc !important;
   }
+
+  form-control[_ngcontent-mmh-c156] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 100px;
+  overflow-x: hidden;
+}

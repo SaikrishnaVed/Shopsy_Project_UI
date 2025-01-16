@@ -85,3 +85,10 @@
   font-size: 1rem;
   font-weight: bold;
 }
+
+.empty-cart {
+  text-align: center;
+  font-size: 28px;
+  color: #888;
+  margin:25px;
+}

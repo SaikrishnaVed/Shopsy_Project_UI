@@ -120,7 +120,6 @@ export class AddProductComponent implements OnInit {
       alert('Please fill all required fields correctly.');
     }
   }
-  
 
   onReset(form: any): void {
     form.reset();

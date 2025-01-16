@@ -1,5 +1,5 @@
   .update-profile-container {  
-    max-width: 600px;
+    max-width: 700px;
     margin: 20px auto;
     padding: 20px;
     background: #f9f9f9;
@@ -81,3 +81,14 @@
 .arr {
   display: flex;
 }
+
+.mg:first-child {
+  margin: 15px;
+  background-color: #bc81cf;
+}
+.mg:last-child {
+  margin-left:15px;
+}
+/* #map {
+  margin:5px;
+} */

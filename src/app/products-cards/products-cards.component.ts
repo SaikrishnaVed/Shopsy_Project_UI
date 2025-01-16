@@ -37,6 +37,7 @@ export class ProductsCardsComponent implements OnInit {
     SortBy: "",
     IsAscending: false,
     Skip: 0,
+    isAdminTable: false
   };
   private subscription: Subscription;
   userId: number;
@@ -166,29 +167,37 @@ export class ProductsCardsComponent implements OnInit {
 
   // Decrement item count in cart
   decrementCount(product: Product): void {
-    // //this.isLoading = true;
-    if (product.cartcount >= 1) {
-      product.cartcount--;
-      const updatedCartItem = {
-        cart_Id: 0,
-        userId: Number(sessionStorage.getItem('userId')),
-        product_Id: product.product_Id,
-        Quantity: product.cartcount,
-      };
-      this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
-        next: () => {
-          //this.isLoading = false;
-          console.log('Cart item decremented');
-        },
-        error: (err) => {
-          //this.isLoading = false;
-          console.error('Error decrementing cart item:', err);
-        },
-      });
-    }
-    else{
-      //this.isLoading = false;
-    }
+    // if(product.cartcount == 1)
+    //   this.removeFromCart(product);
+    // else{
+      // //this.isLoading = true;
+      if (product.cartcount >= 1) {
+        product.cartcount--;
+        const updatedCartItem = {
+          cart_Id: 0,
+          userId: Number(sessionStorage.getItem('userId')),
+          product_Id: product.product_Id,
+          Quantity: product.cartcount,
+        };
+        this.appService.UpdateCartItem(product.product_Id, updatedCartItem).subscribe({
+          next: () => {
+            //this.isLoading = false;
+            console.log('Cart item decremented');
+          },
+          error: (err) => {
+            //this.isLoading = false;
+            console.error('Error decrementing cart item:', err);
+          },
+        });
+      }
+      else{
+        //this.isLoading = false;
+      }
+    // }
+  }
+
+  trackByProductID(index: number, product: any): string {
+    return product.product_Id;
   }
 
   // Remove item from cart

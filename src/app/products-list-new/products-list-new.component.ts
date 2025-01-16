@@ -46,6 +46,7 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
     SortBy: '',
     IsAscending: false,
     Skip: 0,
+    isAdminTable: true
   };
 
   private subscription: Subscription;
@@ -93,6 +94,13 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
         console.log('products popup closed', result);
       }
     });
+  }
+
+  // Helper to determine if all values in a column are numeric
+  isNumericColumn(column: string): boolean {
+    return this.dataSource.data.every(row => 
+      typeof row[column] === 'number' && !isNaN(row[column])
+    );
   }
 
   GetProductList(): void {

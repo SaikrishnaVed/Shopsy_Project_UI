@@ -36,13 +36,18 @@ userMessage: string = '';
     SortBy: "",
     IsAscending: false,
     Skip: 0,
-    isWishListFilter: false
+    isWishListFilter: true,
+    isAdminTable: false
   };
   private subscription: Subscription;
   userId: number;
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  trackByProductID(index: number, product: any): string {
+    return product.product_Id;
   }
 
   // Get list of products

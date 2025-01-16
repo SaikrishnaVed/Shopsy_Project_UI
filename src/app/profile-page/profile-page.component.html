@@ -2,6 +2,10 @@
 <div class="arr">
 <div id="map">
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36320.857275784!2d78.37694815673375!3d17.482281991597098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91b5be1f29c3%3A0xf5af71d23e422328!2sKukatpally%20Housing%20Board%20Colony%2C%20Kukatpally%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1736512536823!5m2!1sen!2sin" width="400" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div>
+    <button type="button" class="mg" mat-button (click)="getLocation()">Update address with current location</button>
+    <p id="location" class="mg">Current Location details will appear here...</p>
+  </div>
 </div>
 
 <div *ngIf="!isLoading" class="update-profile-container">

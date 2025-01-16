@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItem } from './cart/cart.component';
+import { Product } from './products-cards/products-cards.component';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,16 @@ export class AppService {
     });
 
     return this.http.delete(`https://localhost:44348/api/Cart/DeleteCart/${cartId}`, { headers });
+  }
+
+  // Delete a cart item
+  NewDeleteCartItem(product: Product): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post(`https://localhost:44348/api/Cart/NewDeleteCart`, product, { headers });
   }
 
   // Delete a cart item
@@ -234,12 +245,12 @@ export class AppService {
     }
 
   // Get Coupons
-  GetAllCoupons(): Observable<any> {
+  GetAllCoupons(userId: number): Observable<any> {
     const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get(`https://localhost:44348/api/Coupons/GetCoupons`, { headers });
+    return this.http.get(`https://localhost:44348/api/Coupons/GetCoupons/${userId}`, { headers });
   }
 
   AddToCouponUsage(couponUsage: any): Observable<any> {

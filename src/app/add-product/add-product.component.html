@@ -80,7 +80,7 @@
               [(ngModel)]="product.brand_Id"
               name="brand"
               required
-              class="form-select"
+              class="form-select scrollable-menu"
               (change)="onBrandChange($event)"
             >
               <option value="" selected>Select</option>
@@ -114,7 +114,7 @@
               [(ngModel)]="product.category_Id"
               name="category"
               required
-              class="form-select"
+              class="form-select scrollable-menu"
               (change)="onCategoryChange($event)"
             >
               <option value="" selected>Select</option>
@@ -124,6 +124,22 @@
               <option value="new">+ Add New Category</option>
             </select>
           </div>
+
+          <div *ngIf="isAddingNewCategory" class="form-group">
+            <label class="form-label">New Category Name</label>
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="newCategoryName"
+              name="newCategoryName"
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              placeholder="Enter new category name"
+              required
+            />
+            <button mat-raised-button color="primary" (click)="addNewcategory()">Save Category</button>
+          </div>
+
         </mat-expansion-panel>
     
         <mat-expansion-panel>

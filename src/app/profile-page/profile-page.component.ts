@@ -54,23 +54,65 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-  if (confirm('Are you sure you want to update details?')) {
-    this.isLoading = true;
-    this.appService.UpdateUserDetails(this.user).subscribe({
-      next: () => {
-        this.isLoading = false;
-        alert('User profile updated successfully.');
-      },
-      error: () => {
-        this.isLoading = false;
-        alert('An error occurred while updating the profile.');
-      },
-    });
+    onSubmit(): void {
+    if (confirm('Are you sure you want to update details?')) {
+      this.isLoading = true;
+      this.appService.UpdateUserDetails(this.user).subscribe({
+        next: () => {
+          this.isLoading = false;
+          alert('User profile updated successfully.');
+        },
+        error: () => {
+          this.isLoading = false;
+          alert('An error occurred while updating the profile.');
+        },
+      });
+    }
   }
-}
 
   resetForm(profileForm: any): void {
     profileForm.resetForm();
+  }
+
+  getLocation(): void {
+    // Step 1: Get the user's coordinates using Geolocation API
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          // Step 2: Use OpenStreetMap's Nominatim for reverse geocoding
+          const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Step 3: Extract city, state, and country
+            const city = data.address.city || data.address.town || data.address.village;
+            const state = data.address.state;
+            const country = data.address.country;
+
+            this.user.city = city;
+            this.user.state = state;
+            this.user.country = country;
+
+            // Display the result
+            document.getElementById('location').textContent = `City: ${city}, State: ${state}, Country: ${country}`;
+            alert('Updated your address with your current location.');
+          } catch (error) {
+            console.error('Error fetching location details:', error);
+            document.getElementById('location').textContent = 'Unable to fetch location details.';
+          }
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          document.getElementById('location').textContent = 'Unable to get your location.';
+        }
+      );
+    } else {
+      alert('Geolocation is not supported by your browser.');
+    }
   }
 }

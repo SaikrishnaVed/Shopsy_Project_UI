@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProductPreviewDialogComponent {
 
   fileUrl = 'assets/Documents/ProductList_1.pdf';
+  private iframeLoaded = false; // Flag to prevent multiple calls
 
   constructor(
     public dialogRef: MatDialogRef<ProductPreviewDialogComponent>,
@@ -25,4 +26,5 @@ export class ProductPreviewDialogComponent {
   cleanUrl(url){
     return this.sanitise.bypassSecurityTrustResourceUrl(url);
   }
+
 }

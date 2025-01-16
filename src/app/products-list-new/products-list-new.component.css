@@ -6,12 +6,13 @@ body {
 }
 
 table {
-  width: 60%;
+  width: 90% !important;
+  height: 90% !important;
   margin: auto;
 }
 
 mat-paginator{
-  width: 60% !important;
+  width: 90% !important;
   margin: auto;
 }
 
@@ -63,6 +64,27 @@ th {
   padding-right: 0px;
 }
 
-::ng-deep th.mat-header-cell, td, th {
+/* ::ng-deep th.mat-header-cell, td, th {
   text-align: center !important;
+} */
+
+::ng-deep .mat-option-text {
+  display: inline-block;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.small-icon {
+  font-size: 19px; /* Smaller icon size */
+  cursor: pointer;
+}
+
+::ng-deep .numeric-cell {
+  text-align: right;
+}
+
+::ng-deep .text-cell {
+  text-align: left;
 }
