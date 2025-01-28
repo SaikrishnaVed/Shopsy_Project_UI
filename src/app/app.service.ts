@@ -268,4 +268,12 @@ export class AppService {
   ResetPassword(ResetPasswordRequest: any): Observable<any> {
     return this.http.post(`https://localhost:44348/api/Auth/ResetPassword`, ResetPasswordRequest);
   }
+
+  UploadDocument(document: any): Observable<any> {
+    const token =  sessionStorage.getItem('token'); // Replace with the actual token or retrieve dynamically.
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post(`https://localhost:44348/api/Document/uploadDocument`, document, { headers });
+  }
 }

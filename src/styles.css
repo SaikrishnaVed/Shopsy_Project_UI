@@ -1,4 +1,61 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* 
+.text-cell {
+    text-align: left;
+  }
+  
+  .numeric-cell {
+    text-align: center;
+  }
+  
+  ::ng-deep .numeric-cell {
+    margin-left: 25px;
+  }
+  
+  ::ng-deep .text-cell {
+    text-align: left;
+  } */
 
+  
+::ng-deep .text-cell {
+  text-align: left;
+}
+
+/* Header styles */
+.header-left {
+  text-align: left;
+  /* font-weight: bold; */
+}
+
+.header-right {
+  text-align: right;
+  /* font-weight: bold; */
+}
+
+
+::ng-deep .text-header {
+  text-align: left;
+  /* font-weight: bold; */
+}
+
+::ng-deep .numeric-header {
+   text-align: center !important;
+   margin:0px auto;
+}
+
+::ng-deep .numeric-cell {
+  /* text-align: right; */
+  /* margin-left: 60px !important; */
+  text-align: center !important;
+  margin:0px auto;
+}
+
+::ng-deep th.mat-header-cell.header-left {
+  text-align: left !important;
+}
+
+::ng-deep th.mat-header-cell.header-right {
+  text-align: right !important;
+}

@@ -49,6 +49,18 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
     isAdminTable: true
   };
 
+  // Mapping of column names to types
+  columnTypes: { [key: string]: 'text' | 'numeric' } = {
+    product_Name: 'text',
+    list_Price: 'numeric',
+    quantity: 'numeric',
+    color: 'text',
+    model_Year: 'numeric',
+    actions: 'text'
+  };
+
+  hdn_value = 'default test';
+
   private subscription: Subscription;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -99,21 +111,57 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
   // Helper to determine if all values in a column are numeric
   isNumericColumn(column: string): boolean {
     return this.dataSource.data.every(row => 
-      typeof row[column] === 'number' && !isNaN(row[column])
+      typeof row[column] == 'number' && !isNaN(row[column])
     );
   }
+
+  // getCellClass(value: any): string {
+  //   if (!isNaN(parseFloat(value)) && isFinite(value)) {
+  //     return 'numeric-cell';
+  //   }
+  //   return 'text-cell';
+  // }
+
+  // Get the appropriate class for the cell
+  getCellClass(value: any): string {
+    return typeof value == 'number' ? 'numeric-cell' : 'text-cell';
+  }
+
+  // Get the appropriate class for the header
+  getHeaderClass(column: string): string {
+    return this.columnTypes[column] === 'numeric' ? 'numeric-header' : 'text-header';
+  }
+
+  // Determine header alignment based on column name
+  getHeaderAlignment(value: any): string {
+    return typeof value == 'number' ? 'numeric-cell' : 'text-cell';
+  }
+
+  getHeaderStyle(): any {
+    return {
+      textAlign: 'center',
+      // fontSize: '8px',
+    };
+  }
+  
+  getCellStyle(): any {
+    return {
+      textAlign: 'center',
+      // fontSize: '8px',
+    };
+  }  
 
   GetProductList(): void {
     this.isLoading = true;
     this.appService.GetAllProducts(this.filter).subscribe({
       next: (response: any) => {
-        this.isLoading = false;
         if (response?.items) {
           this.productList = response.items;
           this.dataSource.data = response.items;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
+        this.isLoading = false;
       },
       error: () => {
         this.isLoading = false;
@@ -150,9 +198,65 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
     const data = this.productList.map(product => [
       product.product_Name, product.list_Price, product.quantity, product.color, product.model_Year
     ]);
+    this.hdn_value = this.productList[0].product_Name;
+
+    // Create HTML table for editable content (outside of jsPDF)
+    const htmlTable = `
+    <input type="text" class="editable" value=${this.hdn_value}" />
+    <button type="button" (click)="copyToClipboard(${this.hdn_value})">📋Copy</button>
+    <table>
+      <thead>
+        <tr>
+          <th class="editable">Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Color</th>
+          <th>Model Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(row => `<tr><td class="editable">${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <script>
+    // this.hdn_value = this.productList[0].product_Name;
+      copyToClipboard(value): void { 
+        if (value) {
+          navigator.clipboard.writeText(value)
+            .then(() => alert('Copied to clipboard!'))
+            .catch((err) => alert('Failed to copy: ' + err));
+        } else {
+          alert('No value to copy!');
+        }
+      }
+    </script>
+    `;
+
+    // Generate PDF with product list title
     doc.text('Our Shopsy Products List', 14, 10);
     autoTable(doc, { head: headers, body: data, startY: 20 });
+
+    // Download the HTML table as a separate file (for editing)
+    const blob = new Blob([htmlTable], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'ProductListEditable.html';
+    link.click();
+
+    // Save the PDF with product list
     doc.save('ProductList.pdf');
+  }
+
+  copyToClipboard(value: string): void {
+    if (value) {
+      navigator.clipboard
+        .writeText(this.productList[0].product_Name)
+        .then(() => alert('Copied to clipboard!'))
+        .catch((err) => alert('Failed to copy: ' + err));
+    } else {
+      alert('No value to copy!');
+    }
   }
 
   // CSV download method
@@ -198,7 +302,7 @@ export class ProductsListNewComponent implements AfterViewInit, OnDestroy {
         <tbody>
           ${this.productList.map(product => `
             <tr>
-              <td>${product.product_Name}</td>
+              <td class='editable'>${product.product_Name}</td>
               <td>${product.list_Price}</td>
               <td>${product.quantity}</td>
               <td>${product.color}</td>

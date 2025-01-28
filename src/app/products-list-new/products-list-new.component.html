@@ -30,35 +30,36 @@
 </div>
 
 <div class="table-width" id="productTable" >
-  <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort >
+  <input type="hidden" id="hdn_name" value="hdn_value" />
+  <table class="mat-elevation-z8" mat-table [dataSource]="dataSource" matSort style="text-align:right;">
     <ng-container matColumnDef="product_Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let element" [class.numeric-cell]="isNumericColumn(element)" [class.text-cell]="!isNumericColumn(element)"> {{ element.product_Name }} </td>
+      <th mat-header-cell [ngClass]="getHeaderAlignment('product_Name')" *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getCellClass(element.product_Name)" > {{ element.product_Name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="list_Price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-      <td mat-cell *matCellDef="let element" [class.numeric-cell]="isNumericColumn(element)" [class.text-cell]="!isNumericColumn(element)"> {{ element.list_Price }} </td>
+      <th mat-header-cell [ngClass]="getHeaderAlignment('list_Price')" *matHeaderCellDef mat-sort-header> Price </th>
+      <td  mat-cell *matCellDef="let element" [ngClass]="getCellClass(element.list_Price)"> {{ element.list_Price }} </td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
-      <td mat-cell *matCellDef="let element" [class.numeric-cell]="isNumericColumn(element)" [class.text-cell]="!isNumericColumn(element)"> {{ element.quantity }} </td>
+      <th mat-header-cell [ngClass]="getHeaderAlignment('quantity')" *matHeaderCellDef mat-sort-header> Quantity </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getCellClass(element.quantity)"> {{ element.quantity }} </td>
     </ng-container>
 
     <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-      <td mat-cell *matCellDef="let element" [class.numeric-cell]="isNumericColumn(element)" [class.text-cell]="!isNumericColumn(element)"> {{ element.color }} </td>
+      <th mat-header-cell [ngClass]="getHeaderAlignment('color')" *matHeaderCellDef mat-sort-header> Color </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getCellClass(element.color)"> {{ element.color }} </td>
     </ng-container>
 
     <ng-container matColumnDef="model_Year">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Model Year </th>
-      <td mat-cell *matCellDef="let element" [class.numeric-cell]="isNumericColumn(element)" [class.text-cell]="!isNumericColumn(element)"> {{ element.model_Year }} </td>
+      <th mat-header-cell [ngClass]="getHeaderAlignment('model_Year')" *matHeaderCellDef mat-sort-header> Model Year </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getCellClass(element.model_Year)"> {{ element.model_Year }} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions" class="act-cls">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell [ngClass]="getHeaderAlignment(5)" *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element" class="header-left" [ngClass]="getCellClass(element.model_Year)">
           <mat-icon class="small-icon" color="accent" (click)="onPreview()">visibility</mat-icon>
           <mat-icon class="small-icon" color="primary" (click)="onEdit(element)">edit</mat-icon>
           <mat-icon class="small-icon" color="warn" (click)="onDelete(element)">delete</mat-icon>

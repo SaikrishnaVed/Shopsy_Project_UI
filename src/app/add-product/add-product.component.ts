@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
+import * as html2pdf from 'html2pdf.js';
+import { HttpClient } from '@angular/common/http';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-product',
@@ -29,8 +32,11 @@ export class AddProductComponent implements OnInit {
   newCategoryName = '';
   isEditMode: boolean = false;
   isAdmin = false;
+  fileUrl = 'assets/Documents/sample1.html';
+  htmlContent: string = '';
+  sanitizer: any;
 
-  constructor(private appService: AppService, private router: Router) {}
+  constructor(private appService: AppService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -46,6 +52,41 @@ export class AddProductComponent implements OnInit {
     this.loadCategories();
     this.loadBrands();
     this.isLoading = false;
+    this.loadHtmlFile();
+  }
+
+  loadHtmlFile(): void {
+    this.http.get(this.fileUrl, { responseType: 'text' }).subscribe({
+      next: (data) => {
+        this.htmlContent = this.makeFieldsEditable(data);
+      },
+      error: (err) => {
+        console.error('Error loading HTML file:', err);
+      },
+    });
+  }
+
+  //Add contenteditable attribute to fields
+  // makeFieldsEditable(html: string): string {
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(html, 'text/html');
+
+  //   // Find all fields to make editable
+  //   const editableFields = doc.querySelectorAll('.editable');
+  //   editableFields.forEach((field) => {
+  //     field.setAttribute('contenteditable', 'true');
+  //   });
+
+  //   return doc.body.innerHTML; // Return the modified HTML
+  // }
+
+  makeFieldsEditable(html: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+  
+    // Remove the line that sets contenteditable attribute
+  
+    return doc.body.innerHTML; // Return the modified HTML
   }
 
   loadCategories(): void {
@@ -186,4 +227,35 @@ export class AddProductComponent implements OnInit {
     }
   }
 
+  copyToClipboard(value: string): void {
+    if (value) {
+      navigator.clipboard
+        .writeText(value)
+        .then(() => alert('Copied to clipboard!'))
+        .catch((err) => alert('Failed to copy: ' + err));
+    } else {
+      alert('No value to copy!');
+    }
+  }
+  
+  generatePDF(): void {
+    this.loadHtmlFile();
+    const element = document.createElement('div');
+    element.innerHTML = this.htmlContent;
+
+    const opt = {
+      margin: 0.5,
+      filename: 'editable-document.pdf',
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+
+    html2pdf()
+      .set(opt)
+      .from(element)
+      .save()
+      .catch((error) => {
+        console.error('Error generating PDF:', error);
+      });
+  }
 }

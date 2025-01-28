@@ -75,10 +75,72 @@ th {
   cursor: pointer;
 }
 
-::ng-deep .numeric-cell {
+::ng-deep .text-cell {
+  text-align: left;
+}
+
+::ng-deep .header-left {
+  text-align: left;
+}
+
+::ng-deep .header-center {
+  text-align: center;
+}
+
+::ng-deep .header-right {
   text-align: right;
 }
 
-::ng-deep .text-cell {
+::ng-deep .text-header {
   text-align: left;
+}
+
+::ng-deep .numeric-header {
+   text-align: center !important;
+   margin:0px auto;
+}
+
+::ng-deep .numeric-cell {
+  text-align: center !important;
+  margin:0px auto;
+}
+
+::ng-deep th.mat-header-cell.header-left {
+  text-align: left !important;
+}
+
+::ng-deep th.mat-header-cell.header-right {
+  text-align: right !important;
+}
+
+/* ::ng-deep button.mat-sort-header-button.mat-focus-indicator {
+  text-align: center !important;
+  margin: 0px auto; 
+} */
+
+/* ::ng-deep .mat-header-row:not(:first-child) .mat-sort-header-button.mat-focus-indicator {
+  text-align: center !important;
+  margin-right: 25px !important;
+} */
+
+/* 
+::ng-deep th.mat-header-cell.numeric-header .mat-sort-header-button {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+}
+
+::ng-deep th.mat-header-cell.text-header .mat-sort-header-button {
+  text-align: left;
+  font-size: 14px;
+  color: #000;
+} */
+
+/* Target the 2nd, 3rd, and 5th columns' buttons within the table headers */
+::ng-deep th:nth-child(2) .mat-sort-header-button,
+::ng-deep th:nth-child(3) .mat-sort-header-button,
+::ng-deep th:nth-child(5) .mat-sort-header-button {
+  /* Add the 'numeric-cell' styling */
+  text-align: center !important;
+  margin:0px auto;
 }

@@ -14,6 +14,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { DocumentUploadComponent } from './document-upload/document-upload.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'profilepage', component: ProfilePageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'upload-document', component: DocumentUploadComponent },
 ];
 
 @NgModule({

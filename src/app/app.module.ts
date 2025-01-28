@@ -41,6 +41,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LoaderComponent } from './loader/loader.component';
+import html2canvas from 'html2canvas';
+import { DocumentUploadComponent } from './document-upload/document-upload.component';
+import { DynamicAlignDirective } from './dynamic-align.directive';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { LoaderComponent } from './loader/loader.component';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     LoaderComponent,
+    DocumentUploadComponent,
+    DynamicAlignDirective,
+    
   ],
   imports: [
     FormsModule,

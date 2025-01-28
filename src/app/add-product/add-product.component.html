@@ -1,4 +1,6 @@
-    <div class="add-product-container">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    
+    <div class="add-product-container" id="content">
       <h2 class="form-title">Add New Product</h2>
     
       <mat-accordion>
@@ -20,8 +22,9 @@
                 [(ngModel)]="product.product_Name"
                 name="name"
               />
+              <button type="button" (click)="copyToClipboard(product.product_Name)">📋Copy</button>
             </div>
-    
+            
             <div class="form-group">
               <label class="form-label">Color</label>
               <input
@@ -151,9 +154,11 @@
             <label class="form-label">Image</label>
             <input type="file" class="form-control" name="imagePath" (change)="onFileChange($event)" />
           </div>
-    
+
+          <div [innerHTML]="htmlContent"></div>
           <div class="form-actions">
-            <button mat-raised-button color="primary" (click)="onSubmit(productForm)" type="submit">Submit</button>
+            <button mat-raised-button color="primary" (click)="onSubmit(productForm)" type="submit">Submit</button>     
+            <button type="button" (click)="generatePDF()">Download PDF</button>
             <button mat-button type="button" (click)="onReset(productForm)">Reset</button>
             <button mat-raised-button color="secondary" type="button" class="backBtn" *ngIf="isAdmin" routerLink="/productslist">Back</button>
           </div>
